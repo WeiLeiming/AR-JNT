@@ -1,0 +1,839 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		29251AA920DBF53D5548BE71 /* libPods-AR-JNT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F89893F424C5DD5D56F3B0B4 /* libPods-AR-JNT.a */; };
+		806B33291DB4786F36796E21 /* libPods-AR-JNTUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C8BA1415B337ED0154D75D /* libPods-AR-JNTUITests.a */; };
+		90DCEDD5676758DAEC6DDB33 /* libPods-AR-JNTTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61994ED8541CD979D0B33E6E /* libPods-AR-JNTTests.a */; };
+		D57072AD1ED3D68800F0B064 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D57072AC1ED3D68800F0B064 /* Assets.xcassets */; };
+		D57072BB1ED3D68800F0B064 /* AR_JNTTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072BA1ED3D68800F0B064 /* AR_JNTTests.m */; };
+		D57072C61ED3D68800F0B064 /* AR_JNTUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072C51ED3D68800F0B064 /* AR_JNTUITests.m */; };
+		D57072D71ED4165F00F0B064 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072D41ED4165F00F0B064 /* AppDelegate.m */; };
+		D57072D81ED4165F00F0B064 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072D51ED4165F00F0B064 /* main.m */; };
+		D57072F61ED4167F00F0B064 /* QJBaseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072DD1ED4167F00F0B064 /* QJBaseCollectionViewCell.m */; };
+		D57072F71ED4167F00F0B064 /* QJBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072DF1ED4167F00F0B064 /* QJBaseModel.m */; };
+		D57072F81ED4167F00F0B064 /* QJBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E11ED4167F00F0B064 /* QJBaseNavigationController.m */; };
+		D57072F91ED4167F00F0B064 /* QJBaseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E31ED4167F00F0B064 /* QJBaseTabBarController.m */; };
+		D57072FA1ED4167F00F0B064 /* QJBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E51ED4167F00F0B064 /* QJBaseTableViewCell.m */; };
+		D57072FB1ED4167F00F0B064 /* QJBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E71ED4167F00F0B064 /* QJBaseView.m */; };
+		D57072FC1ED4167F00F0B064 /* QJBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E91ED4167F00F0B064 /* QJBaseViewController.m */; };
+		D57072FF1ED417C400F0B064 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57072FD1ED417C400F0B064 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D57072B71ED3D68800F0B064 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D57072951ED3D68700F0B064 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D570729C1ED3D68700F0B064;
+			remoteInfo = "AR-JNT";
+		};
+		D57072C21ED3D68800F0B064 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D57072951ED3D68700F0B064 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D570729C1ED3D68700F0B064;
+			remoteInfo = "AR-JNT";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00C8BA1415B337ED0154D75D /* libPods-AR-JNTUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AR-JNTUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		61994ED8541CD979D0B33E6E /* libPods-AR-JNTTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AR-JNTTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8388F5DB94432BA1BA3C12E9 /* Pods-AR-JNT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNT/Pods-AR-JNT.debug.xcconfig"; sourceTree = "<group>"; };
+		99549D1D4509AA950A98ADC2 /* Pods-AR-JNTTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTTests/Pods-AR-JNTTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A9601D6482454B65B68829B8 /* Pods-AR-JNTUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTUITests/Pods-AR-JNTUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C083DCD12A36AF3E94625B2B /* Pods-AR-JNT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNT.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNT/Pods-AR-JNT.release.xcconfig"; sourceTree = "<group>"; };
+		D570729D1ED3D68800F0B064 /* AR-JNT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-JNT.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D57072AC1ED3D68800F0B064 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D57072B61ED3D68800F0B064 /* AR-JNTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-JNTTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D57072BA1ED3D68800F0B064 /* AR_JNTTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AR_JNTTests.m; sourceTree = "<group>"; };
+		D57072BC1ED3D68800F0B064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D57072C11ED3D68800F0B064 /* AR-JNTUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-JNTUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D57072C51ED3D68800F0B064 /* AR_JNTUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AR_JNTUITests.m; sourceTree = "<group>"; };
+		D57072C71ED3D68800F0B064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D57072D31ED4165F00F0B064 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Main/AppDelegate.h; sourceTree = "<group>"; };
+		D57072D41ED4165F00F0B064 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Main/AppDelegate.m; sourceTree = "<group>"; };
+		D57072D51ED4165F00F0B064 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Main/main.m; sourceTree = "<group>"; };
+		D57072D61ED4165F00F0B064 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Main/PrefixHeader.pch; sourceTree = "<group>"; };
+		D57072DC1ED4167F00F0B064 /* QJBaseCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseCollectionViewCell.h; sourceTree = "<group>"; };
+		D57072DD1ED4167F00F0B064 /* QJBaseCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseCollectionViewCell.m; sourceTree = "<group>"; };
+		D57072DE1ED4167F00F0B064 /* QJBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseModel.h; sourceTree = "<group>"; };
+		D57072DF1ED4167F00F0B064 /* QJBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseModel.m; sourceTree = "<group>"; };
+		D57072E01ED4167F00F0B064 /* QJBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseNavigationController.h; sourceTree = "<group>"; };
+		D57072E11ED4167F00F0B064 /* QJBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseNavigationController.m; sourceTree = "<group>"; };
+		D57072E21ED4167F00F0B064 /* QJBaseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseTabBarController.h; sourceTree = "<group>"; };
+		D57072E31ED4167F00F0B064 /* QJBaseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseTabBarController.m; sourceTree = "<group>"; };
+		D57072E41ED4167F00F0B064 /* QJBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseTableViewCell.h; sourceTree = "<group>"; };
+		D57072E51ED4167F00F0B064 /* QJBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseTableViewCell.m; sourceTree = "<group>"; };
+		D57072E61ED4167F00F0B064 /* QJBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseView.h; sourceTree = "<group>"; };
+		D57072E71ED4167F00F0B064 /* QJBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseView.m; sourceTree = "<group>"; };
+		D57072E81ED4167F00F0B064 /* QJBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJBaseViewController.h; sourceTree = "<group>"; };
+		D57072E91ED4167F00F0B064 /* QJBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJBaseViewController.m; sourceTree = "<group>"; };
+		D57072EB1ED4167F00F0B064 /* QJAppCustomMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJAppCustomMacro.h; sourceTree = "<group>"; };
+		D57072EC1ED4167F00F0B064 /* QJAppInfoMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJAppInfoMacro.h; sourceTree = "<group>"; };
+		D57072ED1ED4167F00F0B064 /* QJCommonMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJCommonMacro.h; sourceTree = "<group>"; };
+		D57072EE1ED4167F00F0B064 /* QJMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJMacro.h; sourceTree = "<group>"; };
+		D57072EF1ED4167F00F0B064 /* QJNetWorkingMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJNetWorkingMacro.h; sourceTree = "<group>"; };
+		D57072FE1ED417C400F0B064 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D57073001ED4186600F0B064 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F89893F424C5DD5D56F3B0B4 /* libPods-AR-JNT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AR-JNT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8F2F4440226EB04015F02C6 /* Pods-AR-JNTTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTTests/Pods-AR-JNTTests.release.xcconfig"; sourceTree = "<group>"; };
+		FFC6CD0C11C77B0FBBF851E4 /* Pods-AR-JNTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTUITests/Pods-AR-JNTUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D570729A1ED3D68700F0B064 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29251AA920DBF53D5548BE71 /* libPods-AR-JNT.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072B31ED3D68800F0B064 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90DCEDD5676758DAEC6DDB33 /* libPods-AR-JNTTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072BE1ED3D68800F0B064 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				806B33291DB4786F36796E21 /* libPods-AR-JNTUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5FE60CA63C8A5C9E4A5FE051 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F89893F424C5DD5D56F3B0B4 /* libPods-AR-JNT.a */,
+				61994ED8541CD979D0B33E6E /* libPods-AR-JNTTests.a */,
+				00C8BA1415B337ED0154D75D /* libPods-AR-JNTUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8B791AAD325463FFBB869FA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8388F5DB94432BA1BA3C12E9 /* Pods-AR-JNT.debug.xcconfig */,
+				C083DCD12A36AF3E94625B2B /* Pods-AR-JNT.release.xcconfig */,
+				99549D1D4509AA950A98ADC2 /* Pods-AR-JNTTests.debug.xcconfig */,
+				F8F2F4440226EB04015F02C6 /* Pods-AR-JNTTests.release.xcconfig */,
+				FFC6CD0C11C77B0FBBF851E4 /* Pods-AR-JNTUITests.debug.xcconfig */,
+				A9601D6482454B65B68829B8 /* Pods-AR-JNTUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D57072941ED3D68700F0B064 = {
+			isa = PBXGroup;
+			children = (
+				D570729F1ED3D68800F0B064 /* AR-JNT */,
+				D57072B91ED3D68800F0B064 /* AR-JNTTests */,
+				D57072C41ED3D68800F0B064 /* AR-JNTUITests */,
+				D570729E1ED3D68800F0B064 /* Products */,
+				8B791AAD325463FFBB869FA5 /* Pods */,
+				5FE60CA63C8A5C9E4A5FE051 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D570729E1ED3D68800F0B064 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D570729D1ED3D68800F0B064 /* AR-JNT.app */,
+				D57072B61ED3D68800F0B064 /* AR-JNTTests.xctest */,
+				D57072C11ED3D68800F0B064 /* AR-JNTUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D570729F1ED3D68800F0B064 /* AR-JNT */ = {
+			isa = PBXGroup;
+			children = (
+				D57072AC1ED3D68800F0B064 /* Assets.xcassets */,
+				D57072DB1ED4167F00F0B064 /* BaseClasses */,
+				D57072EA1ED4167F00F0B064 /* Macro */,
+				D57072F01ED4167F00F0B064 /* Utility */,
+				D57072A01ED3D68800F0B064 /* Supporting Files */,
+			);
+			path = "AR-JNT";
+			sourceTree = "<group>";
+		};
+		D57072A01ED3D68800F0B064 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D57072D31ED4165F00F0B064 /* AppDelegate.h */,
+				D57072D41ED4165F00F0B064 /* AppDelegate.m */,
+				D57072D51ED4165F00F0B064 /* main.m */,
+				D57072D61ED4165F00F0B064 /* PrefixHeader.pch */,
+				D57073001ED4186600F0B064 /* Info.plist */,
+				D57072FD1ED417C400F0B064 /* LaunchScreen.storyboard */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D57072B91ED3D68800F0B064 /* AR-JNTTests */ = {
+			isa = PBXGroup;
+			children = (
+				D57072BA1ED3D68800F0B064 /* AR_JNTTests.m */,
+				D57072BC1ED3D68800F0B064 /* Info.plist */,
+			);
+			path = "AR-JNTTests";
+			sourceTree = "<group>";
+		};
+		D57072C41ED3D68800F0B064 /* AR-JNTUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D57072C51ED3D68800F0B064 /* AR_JNTUITests.m */,
+				D57072C71ED3D68800F0B064 /* Info.plist */,
+			);
+			path = "AR-JNTUITests";
+			sourceTree = "<group>";
+		};
+		D57072DB1ED4167F00F0B064 /* BaseClasses */ = {
+			isa = PBXGroup;
+			children = (
+				D57072DC1ED4167F00F0B064 /* QJBaseCollectionViewCell.h */,
+				D57072DD1ED4167F00F0B064 /* QJBaseCollectionViewCell.m */,
+				D57072DE1ED4167F00F0B064 /* QJBaseModel.h */,
+				D57072DF1ED4167F00F0B064 /* QJBaseModel.m */,
+				D57072E01ED4167F00F0B064 /* QJBaseNavigationController.h */,
+				D57072E11ED4167F00F0B064 /* QJBaseNavigationController.m */,
+				D57072E21ED4167F00F0B064 /* QJBaseTabBarController.h */,
+				D57072E31ED4167F00F0B064 /* QJBaseTabBarController.m */,
+				D57072E41ED4167F00F0B064 /* QJBaseTableViewCell.h */,
+				D57072E51ED4167F00F0B064 /* QJBaseTableViewCell.m */,
+				D57072E61ED4167F00F0B064 /* QJBaseView.h */,
+				D57072E71ED4167F00F0B064 /* QJBaseView.m */,
+				D57072E81ED4167F00F0B064 /* QJBaseViewController.h */,
+				D57072E91ED4167F00F0B064 /* QJBaseViewController.m */,
+			);
+			path = BaseClasses;
+			sourceTree = "<group>";
+		};
+		D57072EA1ED4167F00F0B064 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				D57072EB1ED4167F00F0B064 /* QJAppCustomMacro.h */,
+				D57072EC1ED4167F00F0B064 /* QJAppInfoMacro.h */,
+				D57072ED1ED4167F00F0B064 /* QJCommonMacro.h */,
+				D57072EE1ED4167F00F0B064 /* QJMacro.h */,
+				D57072EF1ED4167F00F0B064 /* QJNetWorkingMacro.h */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		D57072F01ED4167F00F0B064 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D57072F11ED4167F00F0B064 /* Categories */,
+				D57072F21ED4167F00F0B064 /* Fonts */,
+				D57072F31ED4167F00F0B064 /* Launch */,
+				D57072F41ED4167F00F0B064 /* Networking */,
+				D57072F51ED4167F00F0B064 /* ThirdLibraries */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		D57072F11ED4167F00F0B064 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		D57072F21ED4167F00F0B064 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		D57072F31ED4167F00F0B064 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		D57072F41ED4167F00F0B064 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		D57072F51ED4167F00F0B064 /* ThirdLibraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ThirdLibraries;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D570729C1ED3D68700F0B064 /* AR-JNT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D57072CA1ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNT" */;
+			buildPhases = (
+				675FE916A4FEA424F601DF9C /* [CP] Check Pods Manifest.lock */,
+				D57072991ED3D68700F0B064 /* Sources */,
+				D570729A1ED3D68700F0B064 /* Frameworks */,
+				D570729B1ED3D68700F0B064 /* Resources */,
+				6D0B4C98C976F0134BEF19A4 /* [CP] Embed Pods Frameworks */,
+				516B290611EAF14C4628FD9A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AR-JNT";
+			productName = "AR-JNT";
+			productReference = D570729D1ED3D68800F0B064 /* AR-JNT.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D57072B51ED3D68800F0B064 /* AR-JNTTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D57072CD1ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNTTests" */;
+			buildPhases = (
+				77DBE5CAE2E0AAA3F111D8D3 /* [CP] Check Pods Manifest.lock */,
+				D57072B21ED3D68800F0B064 /* Sources */,
+				D57072B31ED3D68800F0B064 /* Frameworks */,
+				D57072B41ED3D68800F0B064 /* Resources */,
+				AF0B6C586733396AC6E86C5E /* [CP] Embed Pods Frameworks */,
+				FC50356804211781CE3F88CE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D57072B81ED3D68800F0B064 /* PBXTargetDependency */,
+			);
+			name = "AR-JNTTests";
+			productName = "AR-JNTTests";
+			productReference = D57072B61ED3D68800F0B064 /* AR-JNTTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D57072C01ED3D68800F0B064 /* AR-JNTUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D57072D01ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNTUITests" */;
+			buildPhases = (
+				91921598B71049B880B9F331 /* [CP] Check Pods Manifest.lock */,
+				D57072BD1ED3D68800F0B064 /* Sources */,
+				D57072BE1ED3D68800F0B064 /* Frameworks */,
+				D57072BF1ED3D68800F0B064 /* Resources */,
+				107BEB1724857D96C51B92D6 /* [CP] Embed Pods Frameworks */,
+				47DFE5828A7FDE29582E14E2 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D57072C31ED3D68800F0B064 /* PBXTargetDependency */,
+			);
+			name = "AR-JNTUITests";
+			productName = "AR-JNTUITests";
+			productReference = D57072C11ED3D68800F0B064 /* AR-JNTUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D57072951ED3D68700F0B064 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "qj-vr";
+				TargetAttributes = {
+					D570729C1ED3D68700F0B064 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = GJ4D5RTMQ2;
+						ProvisioningStyle = Automatic;
+					};
+					D57072B51ED3D68800F0B064 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = GJ4D5RTMQ2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D570729C1ED3D68700F0B064;
+					};
+					D57072C01ED3D68800F0B064 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = GJ4D5RTMQ2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D570729C1ED3D68700F0B064;
+					};
+				};
+			};
+			buildConfigurationList = D57072981ED3D68700F0B064 /* Build configuration list for PBXProject "AR-JNT" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D57072941ED3D68700F0B064;
+			productRefGroup = D570729E1ED3D68800F0B064 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D570729C1ED3D68700F0B064 /* AR-JNT */,
+				D57072B51ED3D68800F0B064 /* AR-JNTTests */,
+				D57072C01ED3D68800F0B064 /* AR-JNTUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D570729B1ED3D68700F0B064 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D57072FF1ED417C400F0B064 /* LaunchScreen.storyboard in Resources */,
+				D57072AD1ED3D68800F0B064 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072B41ED3D68800F0B064 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072BF1ED3D68800F0B064 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		107BEB1724857D96C51B92D6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNTUITests/Pods-AR-JNTUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47DFE5828A7FDE29582E14E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNTUITests/Pods-AR-JNTUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		516B290611EAF14C4628FD9A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNT/Pods-AR-JNT-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		675FE916A4FEA424F601DF9C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6D0B4C98C976F0134BEF19A4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNT/Pods-AR-JNT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		77DBE5CAE2E0AAA3F111D8D3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		91921598B71049B880B9F331 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AF0B6C586733396AC6E86C5E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNTTests/Pods-AR-JNTTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC50356804211781CE3F88CE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-JNTTests/Pods-AR-JNTTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D57072991ED3D68700F0B064 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D57072FB1ED4167F00F0B064 /* QJBaseView.m in Sources */,
+				D57072D81ED4165F00F0B064 /* main.m in Sources */,
+				D57072FA1ED4167F00F0B064 /* QJBaseTableViewCell.m in Sources */,
+				D57072F91ED4167F00F0B064 /* QJBaseTabBarController.m in Sources */,
+				D57072D71ED4165F00F0B064 /* AppDelegate.m in Sources */,
+				D57072F61ED4167F00F0B064 /* QJBaseCollectionViewCell.m in Sources */,
+				D57072F81ED4167F00F0B064 /* QJBaseNavigationController.m in Sources */,
+				D57072FC1ED4167F00F0B064 /* QJBaseViewController.m in Sources */,
+				D57072F71ED4167F00F0B064 /* QJBaseModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072B21ED3D68800F0B064 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D57072BB1ED3D68800F0B064 /* AR_JNTTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D57072BD1ED3D68800F0B064 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D57072C61ED3D68800F0B064 /* AR_JNTUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D57072B81ED3D68800F0B064 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D570729C1ED3D68700F0B064 /* AR-JNT */;
+			targetProxy = D57072B71ED3D68800F0B064 /* PBXContainerItemProxy */;
+		};
+		D57072C31ED3D68800F0B064 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D570729C1ED3D68700F0B064 /* AR-JNT */;
+			targetProxy = D57072C21ED3D68800F0B064 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D57072FD1ED417C400F0B064 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D57072FE1ED417C400F0B064 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D57072C81ED3D68800F0B064 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D57072C91ED3D68800F0B064 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D57072CB1ED3D68800F0B064 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8388F5DB94432BA1BA3C12E9 /* Pods-AR-JNT.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AR-JNT/Main/PrefixHeader.pch";
+				INFOPLIST_FILE = "AR-JNT/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNT";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D57072CC1ED3D68800F0B064 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C083DCD12A36AF3E94625B2B /* Pods-AR-JNT.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AR-JNT/Main/PrefixHeader.pch";
+				INFOPLIST_FILE = "AR-JNT/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNT";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D57072CE1ED3D68800F0B064 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99549D1D4509AA950A98ADC2 /* Pods-AR-JNTTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				INFOPLIST_FILE = "AR-JNTTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNTTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AR-JNT.app/AR-JNT";
+			};
+			name = Debug;
+		};
+		D57072CF1ED3D68800F0B064 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8F2F4440226EB04015F02C6 /* Pods-AR-JNTTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				INFOPLIST_FILE = "AR-JNTTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNTTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AR-JNT.app/AR-JNT";
+			};
+			name = Release;
+		};
+		D57072D11ED3D68800F0B064 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFC6CD0C11C77B0FBBF851E4 /* Pods-AR-JNTUITests.debug.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				INFOPLIST_FILE = "AR-JNTUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNTUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "AR-JNT";
+			};
+			name = Debug;
+		};
+		D57072D21ED3D68800F0B064 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9601D6482454B65B68829B8 /* Pods-AR-JNTUITests.release.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GJ4D5RTMQ2;
+				INFOPLIST_FILE = "AR-JNTUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qj-vr.AR-JNTUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "AR-JNT";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D57072981ED3D68700F0B064 /* Build configuration list for PBXProject "AR-JNT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D57072C81ED3D68800F0B064 /* Debug */,
+				D57072C91ED3D68800F0B064 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D57072CA1ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D57072CB1ED3D68800F0B064 /* Debug */,
+				D57072CC1ED3D68800F0B064 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D57072CD1ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNTTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D57072CE1ED3D68800F0B064 /* Debug */,
+				D57072CF1ED3D68800F0B064 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D57072D01ED3D68800F0B064 /* Build configuration list for PBXNativeTarget "AR-JNTUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D57072D11ED3D68800F0B064 /* Debug */,
+				D57072D21ED3D68800F0B064 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D57072951ED3D68700F0B064 /* Project object */;
+}
