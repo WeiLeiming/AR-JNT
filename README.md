@@ -1,2 +1,2 @@
 # AR-JNT
-An AR JNT demo project
+演示AR JNT手枪
