@@ -203,7 +203,7 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-    return NO;
+    return YES;
 }
 
 #pragma mark - interface orientation

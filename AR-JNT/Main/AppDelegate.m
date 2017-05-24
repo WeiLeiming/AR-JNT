@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "QJBaseViewController.h"
+#import "QJCheckUpdateViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    QJBaseViewController *vc = [[QJBaseViewController alloc] init];
+    QJCheckUpdateViewController *vc = [[QJCheckUpdateViewController alloc] init];
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
     return YES;
