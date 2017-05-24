@@ -20,7 +20,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self baseConfig];
+//    [self baseConfig];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,7 +28,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - base config
+#pragma mark - Base Config
 - (void)baseConfig {
     [self setBaseCommonNavigation];
     if ([self.navigationController.jk_rootViewController isKindOfClass:[self class]]) {
@@ -38,7 +38,7 @@
     }
 }
 
-#pragma mark - navigation
+#pragma mark - Navigation
 - (void)setBaseCommonNavigation {
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     self.navigationController.navigationBar.translucent = NO;
@@ -197,7 +197,7 @@
     }
 }
 
-#pragma mark - status bar
+#pragma mark - Status Bar
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -207,6 +207,7 @@
 }
 
 #pragma mark - interface orientation
+/*
 // 是否支持自动转屏
 - (BOOL)shouldAutorotate {
     return NO;
@@ -221,6 +222,7 @@
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return UIInterfaceOrientationPortrait;
 }
+*/
 
 /*
 #pragma mark - Navigation

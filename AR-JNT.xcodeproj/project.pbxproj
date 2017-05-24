@@ -138,6 +138,45 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D5673E281ED568E800AAA2CF /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D5673E291ED568E800AAA2CF /* Common */,
+			);
+			path = UserInterface;
+			sourceTree = "<group>";
+		};
+		D5673E291ED568E800AAA2CF /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D5673E2A1ED568E800AAA2CF /* Controllers */,
+				D5673E2B1ED568E800AAA2CF /* Models */,
+				D5673E2C1ED568E800AAA2CF /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D5673E2A1ED568E800AAA2CF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		D5673E2B1ED568E800AAA2CF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D5673E2C1ED568E800AAA2CF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		D57072941ED3D68700F0B064 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				D57072AC1ED3D68800F0B064 /* Assets.xcassets */,
+				D5673E281ED568E800AAA2CF /* UserInterface */,
 				D57072DB1ED4167F00F0B064 /* BaseClasses */,
 				D57072EA1ED4167F00F0B064 /* Macro */,
 				D57072F01ED4167F00F0B064 /* Utility */,
