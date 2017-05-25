@@ -10,7 +10,7 @@
 #define QJNetWorkingMacro_h
 
 #ifdef kTestServerOpen
-    #define kMainServerUrl                   @"http://120.24.69.30:8080"
+    #define kMainServerUrl                   @"http://192.168.1.99:80"
 #else
     #define kMainServerUrl                   @"http://"
 #endif

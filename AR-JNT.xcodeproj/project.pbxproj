@@ -56,6 +56,7 @@
 		D57072FB1ED4167F00F0B064 /* QJBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E71ED4167F00F0B064 /* QJBaseView.m */; };
 		D57072FC1ED4167F00F0B064 /* QJBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E91ED4167F00F0B064 /* QJBaseViewController.m */; };
 		D57072FF1ED417C400F0B064 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57072FD1ED417C400F0B064 /* LaunchScreen.storyboard */; };
+		D5AEA1C51ED6BAF700955956 /* QJNetworkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AEA1C41ED6BAF700955956 /* QJNetworkingRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,8 @@
 		D57072EF1ED4167F00F0B064 /* QJNetWorkingMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJNetWorkingMacro.h; sourceTree = "<group>"; };
 		D57072FE1ED417C400F0B064 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D57073001ED4186600F0B064 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5AEA1C31ED6BAF700955956 /* QJNetworkingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJNetworkingRequest.h; sourceTree = "<group>"; };
+		D5AEA1C41ED6BAF700955956 /* QJNetworkingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJNetworkingRequest.m; sourceTree = "<group>"; };
 		F89893F424C5DD5D56F3B0B4 /* libPods-AR-JNT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AR-JNT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8F2F4440226EB04015F02C6 /* Pods-AR-JNTTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTTests/Pods-AR-JNTTests.release.xcconfig"; sourceTree = "<group>"; };
 		FFC6CD0C11C77B0FBBF851E4 /* Pods-AR-JNTUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-JNTUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-JNTUITests/Pods-AR-JNTUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -463,6 +466,8 @@
 		D57072F41ED4167F00F0B064 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				D5AEA1C31ED6BAF700955956 /* QJNetworkingRequest.h */,
+				D5AEA1C41ED6BAF700955956 /* QJNetworkingRequest.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -787,6 +792,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5AEA1C51ED6BAF700955956 /* QJNetworkingRequest.m in Sources */,
 				D57072FB1ED4167F00F0B064 /* QJBaseView.m in Sources */,
 				D57072D81ED4165F00F0B064 /* main.m in Sources */,
 				D57072FA1ED4167F00F0B064 /* QJBaseTableViewCell.m in Sources */,

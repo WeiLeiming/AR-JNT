@@ -8,6 +8,7 @@
 
 #import "QJCheckUpdateViewController.h"
 #import "QJCheckUpdateView.h"
+#import "QJNetworkingRequest.h"
 
 static const CGFloat kAnimationDuration = 2.f;
 
@@ -34,6 +35,7 @@ static const CGFloat kAnimationDuration = 2.f;
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     [self startProgressAnimation];
+    [self fetchSyetemStatus];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +84,16 @@ static const CGFloat kAnimationDuration = 2.f;
 - (void)timerCallBack {
     [self.progressImageView removeFromSuperview];
     self.progressImageView = nil;
+}
+
+#pragma mark - Network
+- (void)fetchSyetemStatus {
+    NSString *path = [kMainServerUrl stringByAppendingString:@"/macup/state/"];
+    [QJNetworkingRequest GET:path parameters:nil needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@", responseObject);
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+    }];
 }
 
 @end
