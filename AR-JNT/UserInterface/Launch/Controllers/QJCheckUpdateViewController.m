@@ -49,19 +49,23 @@ static const CGFloat kAnimationDuration = 2.f;
 - (void)startProgressAnimation {
     self.bgImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage jk_imageWithFileName:@"Progress_00030"];
+        imageView.image = [UIImage imageNamed:@"Progress_00030@2x"];
         [self.view addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_HEIGHT);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_HEIGHT);
         }];
         imageView;
     });
     self.progressImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage jk_imageWithFileName:@"Progress_00000"];
+        imageView.image = [UIImage imageNamed:@"Progress_00000@2x"];
         [self.view addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_HEIGHT);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_HEIGHT);
         }];
         imageView;
     });
