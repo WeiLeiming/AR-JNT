@@ -43,9 +43,9 @@
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self);
-            make.top.mas_equalTo(self.mas_top).offset(290.f / 2 * SCREEN_SCALE_HEIGHT);
-            make.width.mas_equalTo(112.f * SCREEN_SCALE_HEIGHT);
-            make.height.mas_equalTo(70.f * SCREEN_SCALE_HEIGHT);
+            make.top.mas_equalTo(self.mas_top).offset(290.f / 2 * SCREEN_SCALE_LANDSCAPE);
+            make.width.mas_equalTo(112.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(70.f * SCREEN_SCALE_LANDSCAPE);
         }];
         imageView;
     });

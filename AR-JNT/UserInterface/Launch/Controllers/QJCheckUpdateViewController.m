@@ -9,8 +9,9 @@
 #import "QJCheckUpdateViewController.h"
 #import "QJCheckUpdateView.h"
 #import "QJNetworkingRequest.h"
+#import "QJConnectBluetoothViewController.h"
 
-static const CGFloat kAnimationDuration = 2.f;
+static const CGFloat kAnimationDuration = 1.f;
 
 @interface QJCheckUpdateViewController ()
 
@@ -23,7 +24,7 @@ static const CGFloat kAnimationDuration = 2.f;
 @implementation QJCheckUpdateViewController
 
 - (void)dealloc {
-    NSLog(@"%@", self.class);
+    NSLog(@"dealloc: %@", self.class);
 }
 
 - (void)viewDidLoad {
@@ -43,6 +44,7 @@ static const CGFloat kAnimationDuration = 2.f;
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Animation
 /**
  *  进度条动画
  */
@@ -53,8 +55,8 @@ static const CGFloat kAnimationDuration = 2.f;
         [self.view addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(460.f * SCREEN_SCALE_HEIGHT);
-            make.height.mas_equalTo(57.f * SCREEN_SCALE_HEIGHT);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
         }];
         imageView;
     });
@@ -64,8 +66,8 @@ static const CGFloat kAnimationDuration = 2.f;
         [self.view addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(460.f * SCREEN_SCALE_HEIGHT);
-            make.height.mas_equalTo(57.f * SCREEN_SCALE_HEIGHT);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
         }];
         imageView;
     });
@@ -88,6 +90,8 @@ static const CGFloat kAnimationDuration = 2.f;
 - (void)timerCallBack {
     [self.progressImageView removeFromSuperview];
     self.progressImageView = nil;
+    QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
+    kAppDelegate.window.rootViewController = bluetoothVC;
 }
 
 #pragma mark - Network
