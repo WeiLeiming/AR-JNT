@@ -10,4 +10,6 @@
 
 @interface QJConnectBluetoothView : QJBaseView
 
+- (void)qj_startFlashSequenceAnimation;
+
 @end
