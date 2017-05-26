@@ -26,11 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.checkUpdateView = [[QJCheckUpdateView alloc] init];
-    [self.view addSubview:self.checkUpdateView];
-    [self.checkUpdateView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
-    }];
     [self startProgressSequenceAnimation];
     [self fetchSyetemStatus];
 }
@@ -38,6 +33,18 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Getter
+- (QJCheckUpdateView *)checkUpdateView {
+    if (!_checkUpdateView) {
+        _checkUpdateView = [[QJCheckUpdateView alloc] init];
+        [self.view addSubview:_checkUpdateView];
+        [_checkUpdateView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(UIEdgeInsetsZero);
+        }];
+    }
+    return _checkUpdateView;
 }
 
 #pragma mark - Progress Animation
