@@ -22,8 +22,8 @@
 #define SCREEN_SIZE             [UIScreen mainScreen].bounds.size
 #define SCREEN_MAX_LENGTH       MAX(SCREEN_WIDTH, SCREEN_HEIGHT)
 #define SCREEN_MIN_LENGTH       MIN(SCREEN_WIDTH, SCREEN_HEIGHT)
-#define SCREEN_SCALE            SCREEN_WIDTH / 375.0
-#define SCREEN_SCALE_HEIGHT     SCREEN_HEIGHT / 375.0
+#define SCREEN_SCALE_PORTRAIT   SCREEN_WIDTH / 375.0
+#define SCREEN_SCALE_LANDSCAPE  SCREEN_HEIGHT / 375.0
 // 字符串是否为空
 #define kStringIsEmpty(str)     (str == nil || [str isKindOfClass:[NSNull class]] || str.length == 0)
 // 数组是否为空
