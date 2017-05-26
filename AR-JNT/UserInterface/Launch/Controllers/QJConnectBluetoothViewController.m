@@ -8,6 +8,7 @@
 
 #import "QJConnectBluetoothViewController.h"
 #import "QJConnectBluetoothView.h"
+#import "QJNetworkingRequest.h"
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -59,6 +60,18 @@
 - (void)showInfoWithStatus:(NSString *)status {
     [SVProgressHUD showImage:nil status:status];
     [SVProgressHUD dismissWithDelay:kProgressHUDShowDuration];
+}
+
+#pragma mark - Network
+- (void)uploadMacAddress:(NSString *)address {
+    // http://ip:port/macup/upload/{mac}
+    NSString *mainPath = [kMainServerUrl stringByAppendingString:@"/macup/upload/"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@", mainPath, address];
+    [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@", responseObject);
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+    }];
 }
 
 #pragma mark - CBCentralManagerDelegate
@@ -194,7 +207,9 @@
     } else {
         NSLog(@"Notification stopped on %@.  Disconnecting", characteristic);
         [self.centralManager cancelPeripheralConnection:self.peripheral];
+        return;
     }
+    [self uploadMacAddress:peripheral.identifier.UUIDString];
 }
 
 @end
