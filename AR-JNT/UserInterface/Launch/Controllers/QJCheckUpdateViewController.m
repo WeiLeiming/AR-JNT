@@ -61,8 +61,9 @@
 
 #pragma mark - Network
 - (void)fetchSyetemStatus {
-    NSString *path = [kMainServerUrl stringByAppendingString:@"/macup/state/"];
-    [QJNetworkingRequest GET:path parameters:nil needCache:NO success:^(id operation, id responseObject) {
+    // http://ip:port/macup/state/
+    NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/state/"];
+    [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@", responseObject);
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
