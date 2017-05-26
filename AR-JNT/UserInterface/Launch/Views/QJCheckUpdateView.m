@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *logoImageView;
+@property (nonatomic, strong) UIImageView *progressBackgroundImageView;
+@property (nonatomic, strong) UIImageView *progressImageView;
 
 @end
 
@@ -49,6 +51,46 @@
         }];
         imageView;
     });
+    self.progressBackgroundImageView = ({
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.image = [UIImage imageNamed:@"Progress_00030@2x"];
+        [self addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
+        }];
+        imageView;
+    });
+    self.progressImageView = ({
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [self addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.mas_equalTo(self);
+            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
+        }];
+        imageView;
+    });
+}
+
+#pragma mark - Public Method
+- (void)qj_startProgressSequenceAnimation {
+    NSMutableArray *images = [NSMutableArray array];
+    for (int i = 0; i <= 30; i++) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Progress_000%02d@2x", i] ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        [images addObject:image];
+    }
+    self.progressImageView.animationDuration = kProgressAnimationDuration;
+    self.progressImageView.animationRepeatCount = 1;
+    self.progressImageView.animationImages = images;
+    [self.progressImageView startAnimating];
+}
+
+- (void)qj_removeProgressSequenceAnimation {
+    [self.progressImageView removeFromSuperview];
+    self.progressImageView = nil;
 }
 
 @end

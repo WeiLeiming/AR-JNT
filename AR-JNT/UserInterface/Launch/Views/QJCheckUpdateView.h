@@ -10,4 +10,7 @@
 
 @interface QJCheckUpdateView : QJBaseView
 
+- (void)qj_startProgressSequenceAnimation;
+- (void)qj_removeProgressSequenceAnimation;
+
 @end

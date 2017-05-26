@@ -11,13 +11,9 @@
 #import "QJNetworkingRequest.h"
 #import "QJConnectBluetoothViewController.h"
 
-static const CGFloat kAnimationDuration = 1.f;
-
 @interface QJCheckUpdateViewController ()
 
 @property (nonatomic, strong) QJCheckUpdateView *checkUpdateView;
-@property (nonatomic, strong) UIImageView *bgImageView;
-@property (nonatomic, strong) UIImageView *progressImageView;
 
 @end
 
@@ -35,7 +31,7 @@ static const CGFloat kAnimationDuration = 1.f;
     [self.checkUpdateView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
-    [self startProgressAnimation];
+    [self startProgressSequenceAnimation];
     [self fetchSyetemStatus];
 }
 
@@ -44,52 +40,14 @@ static const CGFloat kAnimationDuration = 1.f;
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Animation
-/**
- *  进度条动画
- */
-- (void)startProgressAnimation {
-    self.bgImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"Progress_00030@2x"];
-        [self.view addSubview:imageView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
-            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
-        }];
-        imageView;
-    });
-    self.progressImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"Progress_00000@2x"];
-        [self.view addSubview:imageView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self.view);
-            make.width.mas_equalTo(460.f * SCREEN_SCALE_LANDSCAPE);
-            make.height.mas_equalTo(57.f * SCREEN_SCALE_LANDSCAPE);
-        }];
-        imageView;
-    });
-    NSMutableArray *images = [NSMutableArray array];
-    for (int i = 0; i <= 30; i++) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Progress_000%02d@2x", i] ofType:@"png"];
-        UIImage *image = [UIImage imageWithContentsOfFile:path];
-        [images addObject:image];
-    }
-    self.progressImageView.animationDuration = kAnimationDuration;
-    self.progressImageView.animationRepeatCount = 1;
-    self.progressImageView.animationImages = images;
-    [self.progressImageView startAnimating];
-    [NSTimer scheduledTimerWithTimeInterval:kAnimationDuration target:self selector:@selector(timerCallBack) userInfo:nil repeats:NO];
+#pragma mark - Progress Animation
+- (void)startProgressSequenceAnimation {
+    [self.checkUpdateView qj_startProgressSequenceAnimation];
+    [NSTimer scheduledTimerWithTimeInterval:kProgressAnimationDuration + 0.2f target:self selector:@selector(timerCallBack) userInfo:nil repeats:NO];
 }
 
-/**
- *  进度条动画结束
- */
 - (void)timerCallBack {
-    [self.progressImageView removeFromSuperview];
-    self.progressImageView = nil;
+    [self.checkUpdateView qj_removeProgressSequenceAnimation];
     QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
     kAppDelegate.window.rootViewController = bluetoothVC;
 }
