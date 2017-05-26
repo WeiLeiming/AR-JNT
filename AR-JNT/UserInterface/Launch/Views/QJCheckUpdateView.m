@@ -29,7 +29,7 @@
 }
 
 #pragma mark - UI
-- (void)initCustomUI{
+- (void)initCustomUI {
     self.backgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.image = [UIImage imageNamed:@"CheckUpdateBackground"];
