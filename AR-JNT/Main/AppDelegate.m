@@ -59,6 +59,7 @@
     self.networkStatus = AFNetworkReachabilityStatusUnknown;
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         self.networkStatus = status;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NetworkStatus" object:nil];
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
                 NSLog(@"未知网络");
