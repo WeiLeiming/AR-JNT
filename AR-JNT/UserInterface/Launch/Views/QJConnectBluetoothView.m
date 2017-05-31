@@ -53,8 +53,8 @@
 #pragma mark - Public Method
 - (void)qj_startFlashSequenceAnimation {
     NSMutableArray *images = [NSMutableArray array];
-    for (int i = 0; i <= 20; i++) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Flash_000%02d", i] ofType:@"png"];
+    for (int i = 0; i <= 18; i++) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"lamp_000%02d", i] ofType:@"png"];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         [images addObject:image];
     }
