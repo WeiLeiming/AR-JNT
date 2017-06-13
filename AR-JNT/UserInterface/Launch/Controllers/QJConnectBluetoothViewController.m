@@ -12,7 +12,7 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface QJConnectBluetoothViewController () <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface QJConnectBluetoothViewController () <CBCentralManagerDelegate, CBPeripheralDelegate, QJConnectBluetoothViewDelegate>
 
 @property (nonatomic, strong) QJConnectBluetoothView *bluetoothView;
 
@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [kAppDelegate hideUnityWindow];
     [self startFlashSequenceAnimation];
     self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
@@ -43,6 +44,7 @@
 - (QJConnectBluetoothView *)bluetoothView {
     if (!_bluetoothView) {
         _bluetoothView = [[QJConnectBluetoothView alloc] init];
+        _bluetoothView.delegate = self;
         [self.view addSubview:_bluetoothView];
         [_bluetoothView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsZero);
@@ -74,6 +76,12 @@
     }];
 }
 
+#pragma mark - QJConnectBluetoothViewDelegate
+- (void)connectBluetoothView:(QJConnectBluetoothView *)view languageBtnClicked:(UIButton *)sender {
+    NSLog(@"change language button click");
+    [QJLanguageManagerShare changeNowLanguage];
+}
+
 #pragma mark - CBCentralManagerDelegate
 /**
  中心管理者初始化，触发此代理方法，判断手机蓝牙状态
@@ -94,12 +102,13 @@
             break;
         case CBManagerStatePoweredOff:
             NSLog(@"手机蓝牙状态 --->>> CBManagerStatePoweredOff");
-            [self showInfoWithStatus:@"蓝牙已关闭"];
+            [self showInfoWithStatus:QJLocalizedStringFromTable(@"蓝牙已关闭", @"Localizable")];
             break;
         case CBCentralManagerStatePoweredOn:
             NSLog(@"手机蓝牙状态 --->>> CBCentralManagerStatePoweredOn");
-            [self showInfoWithStatus:@"蓝牙已打开"];
+            [self showInfoWithStatus:QJLocalizedStringFromTable(@"蓝牙已打开", @"Localizable")];
             [self.centralManager scanForPeripheralsWithServices:nil options:nil]; // 搜索蓝牙设备
+//            [kAppDelegate showUnityWindow];
             break;
         default:
             break;

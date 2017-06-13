@@ -41,7 +41,8 @@
     });
     self.logoImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"CheckUpdateLogo"];
+        NSString *localizedString = QJLocalizedStringFromTable(@"CheckUpdateLogo", @"Localizable");
+        imageView.image = [UIImage imageNamed:localizedString];
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self);

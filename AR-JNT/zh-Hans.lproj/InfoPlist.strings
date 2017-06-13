@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  AR-JNT
+
+  Created by willwei on 2017/6/12.
+  Copyright © 2017年 qj-vr. All rights reserved.
+*/
+
+// App名称
+CFBundleDisplayName = "AR JNT";

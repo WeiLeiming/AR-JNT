@@ -53,7 +53,8 @@
     });
     self.promptImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"NoNetworkPrompt"];
+        NSString *localizedString = QJLocalizedStringFromTable(@"NoNetworkPrompt", @"Localizable");
+        imageView.image = [UIImage imageNamed:localizedString];
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self);
@@ -65,8 +66,10 @@
     });
     self.retryButton = ({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setImage:[UIImage imageNamed:@"NoNetworkBtn_Retry"] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:@"NoNetworkBtn_Retry_Click"] forState:UIControlStateHighlighted];
+        NSString *localizedString = QJLocalizedStringFromTable(@"NoNetworkBtn_Retry", @"Localizable");
+        NSString *localizedString_Click = QJLocalizedStringFromTable(@"NoNetworkBtn_Retry_Click", @"Localizable");
+        [button setImage:[UIImage imageNamed:localizedString] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:localizedString_Click] forState:UIControlStateHighlighted];
         [button addTarget:self action:@selector(retryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {

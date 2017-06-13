@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  AR-JNT
+
+  Created by willwei on 2017/6/12.
+  Copyright © 2017年 qj-vr. All rights reserved.
+*/
+
+// CheckUpdate
+
+"CheckUpdateLogo" = "CheckUpdateLogo";
+
+// Bluetooth
+
+"LanguageBtn" = "LanguageBtn_EN";
+
+"Bluetooth" = "Bluetooth";
+
+// NoNetwork
+
+"NoNetworkPrompt" = "NoNetworkPrompt";
+
+"NoNetworkBtn_Retry" = "NoNetworkBtn_Retry";
+
+"NoNetworkBtn_Retry_Click" = "NoNetworkBtn_Retry_Click";
+
+// HUD
+
+"蓝牙已关闭" = "蓝牙已关闭";
+
+"蓝牙已打开" = "蓝牙已打开";
+
+"已发现设备" = "已发现设备";
+
+"连接成功" = "连接成功";
+
+"连接失败" = "连接失败";
+
+"丢失连接" = "丢失连接";

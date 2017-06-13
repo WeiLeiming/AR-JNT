@@ -8,7 +8,17 @@
 
 #import "QJBaseView.h"
 
+@class QJConnectBluetoothView;
+
+@protocol QJConnectBluetoothViewDelegate <NSObject>
+
+- (void)connectBluetoothView:(QJConnectBluetoothView *)view languageBtnClicked:(UIButton *)sender;
+
+@end
+
 @interface QJConnectBluetoothView : QJBaseView
+
+@property(nonatomic, weak) id<QJConnectBluetoothViewDelegate> delegate;
 
 - (void)qj_startFlashSequenceAnimation;
 

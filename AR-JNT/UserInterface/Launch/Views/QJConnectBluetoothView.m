@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *flashViewImage;
+@property (nonatomic, strong) UIButton *languageBtn;
 
 @end
 
@@ -30,7 +31,8 @@
 - (void)initCustomUI {
     self.backgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.image = [UIImage imageNamed:@"Bluetooth"];
+        NSString *localizedString = QJLocalizedStringFromTable(@"Bluetooth", @"Localizable");
+        imageView.image = [UIImage imageNamed:localizedString];
         [self addSubview:imageView];
         [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsZero);
@@ -48,6 +50,27 @@
         }];
         imageView;
     });
+    self.languageBtn = ({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        NSString *localizedString = QJLocalizedStringFromTable(@"LanguageBtn", @"Localizable");
+        [button setImage:[UIImage imageNamed:localizedString] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(languageBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.mas_top).offset(5.f * SCREEN_SCALE_LANDSCAPE);
+            make.right.equalTo(self.mas_right).offset(-22.f * SCREEN_SCALE_LANDSCAPE);
+            make.width.mas_equalTo(67.f * SCREEN_SCALE_LANDSCAPE);
+            make.height.mas_equalTo(34.f * SCREEN_SCALE_LANDSCAPE);
+        }];
+        button;
+    });
+}
+
+#pragma mark - Action
+- (void)languageBtnClicked:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(connectBluetoothView:languageBtnClicked:)]) {
+        [self.delegate connectBluetoothView:self languageBtnClicked:sender];
+    }
 }
 
 #pragma mark - Public Method
