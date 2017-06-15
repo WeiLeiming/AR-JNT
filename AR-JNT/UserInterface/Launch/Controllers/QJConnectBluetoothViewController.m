@@ -12,12 +12,16 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface QJConnectBluetoothViewController () <CBCentralManagerDelegate, CBPeripheralDelegate, QJConnectBluetoothViewDelegate>
+@interface QJConnectBluetoothViewController () <CBCentralManagerDelegate, CBPeripheralDelegate, QJConnectBluetoothViewDelegate> {
+    Byte _hexD;
+}
 
 @property (nonatomic, strong) QJConnectBluetoothView *bluetoothView;
 
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
+
+@property (nonatomic, strong) CBCharacteristic *interestingCharacteristic;
 
 @end
 
@@ -107,7 +111,7 @@
         case CBCentralManagerStatePoweredOn:
             NSLog(@"手机蓝牙状态 --->>> CBCentralManagerStatePoweredOn");
             [self showInfoWithStatus:QJLocalizedStringFromTable(@"蓝牙已打开", @"Localizable")];
-            [self.centralManager scanForPeripheralsWithServices:nil options:nil]; // 搜索蓝牙设备
+            [central scanForPeripheralsWithServices:nil options:nil]; // 搜索蓝牙设备
 //            [kAppDelegate showUnityWindow];
             break;
         default:
@@ -123,8 +127,8 @@
         NSLog(@"已发现设备 --->>> peripheral: %@, RSSI: %@, advertisementData: %@", peripheral, RSSI, advertisementData);
         [self showInfoWithStatus:@"已发现设备"];
         self.peripheral = peripheral;
-        [self.centralManager stopScan]; // 停止搜索
-        [self.centralManager connectPeripheral:self.peripheral options:nil]; // 连接设备
+        [central stopScan]; // 停止搜索
+        [central connectPeripheral:peripheral options:nil]; // 连接设备
     }
 }
 
@@ -135,8 +139,8 @@
     NSLog(@"连接成功 --->>> peripheral: %@", peripheral);
     [self showInfoWithStatus:@"连接成功"];
     peripheral.delegate = self; // 设置外设的代理
-    [self.peripheral readRSSI];
-    [self.peripheral discoverServices:nil]; // 开始外设服务,传nil代表不过滤
+    [peripheral readRSSI];
+    [peripheral discoverServices:nil]; // 开始外设服务,传nil代表不过滤
 }
 
 /**
@@ -176,6 +180,16 @@
             interestingService = service;
         }
     }
+    
+    // 没搜索到FFF4服务，断开连接重新搜索并返回
+    if (!interestingService) {
+        // 断开连接后重新搜索
+        [self.centralManager cancelPeripheralConnection:peripheral];
+        [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+        return;
+    }
+    
+    // 发现FFF4服务中的特征
     [peripheral discoverCharacteristics:nil forService:interestingService];
 }
 
@@ -185,13 +199,33 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error {
     NSLog(@"服务 --->>> service: %@", service);
     CBCharacteristic *interestingCharacteristic;
+    BOOL isFFF5Exist = NO;
+    BOOL isFFF3Exist = NO;
     for (CBCharacteristic *characteristic in service.characteristics) {
         NSLog(@"Discovered characteristic --->>> %@", characteristic);
         if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF5"]]) {
+            // 扳机
+            isFFF5Exist = YES;
+            self.interestingCharacteristic = characteristic;
+        } else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF3"]]) {
+            // 握手
+            isFFF3Exist = YES;
             interestingCharacteristic = characteristic;
         }
     }
-    if ((interestingCharacteristic.properties & CBCharacteristicPropertyNotify) == CBCharacteristicPropertyNotify) {
+    
+    // FFF3和FFF5特征只要有一个不存在，就断开连接重新搜索并返回
+    if (!(isFFF5Exist && isFFF3Exist)) {
+        // 断开连接后重新搜索
+        [self.centralManager cancelPeripheralConnection:peripheral];
+        [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+        return;
+    }
+    
+    // 往FFF3写数据并监听
+    NSData *randomData = [self generateRandomHexData];
+    if (interestingCharacteristic.properties == (CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify)) {
+        [peripheral writeValue:randomData forCharacteristic:interestingCharacteristic type:CBCharacteristicWriteWithResponse];
         [peripheral setNotifyValue:YES forCharacteristic:interestingCharacteristic];
     }
 }
@@ -210,15 +244,62 @@
     NSLog(@"更新Characteristic的NotificationState --->>> %@", characteristic);
     if (error) {
         NSLog(@"Error changing notification state: %@", error.localizedDescription);
-    }
-    if (characteristic.isNotifying) {
-        [peripheral readValueForCharacteristic:characteristic];
-    } else {
-        NSLog(@"Notification stopped on %@.  Disconnecting", characteristic);
-        [self.centralManager cancelPeripheralConnection:self.peripheral];
         return;
     }
-    [self uploadMacAddress:peripheral.identifier.UUIDString];
+    
+    if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF3"]] && characteristic.value) {
+        Byte backHexD;
+        [characteristic.value getBytes:&backHexD range:NSMakeRange(13, 1)];
+        if (_hexD == backHexD) {
+            NSLog(@"握手一致，开始监听FFF5");
+            if ((self.interestingCharacteristic.properties & CBCharacteristicPropertyNotify) == CBCharacteristicPropertyNotify) {
+                [peripheral setNotifyValue:YES forCharacteristic:self.interestingCharacteristic];
+            }
+        } else {
+            // 断开连接后重新搜索
+            [self.centralManager cancelPeripheralConnection:peripheral];
+            [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+            return;
+        }
+        [peripheral setNotifyValue:NO forCharacteristic:characteristic];
+    }
+//    [self uploadMacAddress:peripheral.identifier.UUIDString];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+    NSLog(@"已发送数据成功 --->>> %@, error = %@", characteristic, error);
+}
+
+#pragma mark - Private method
+- (NSData *)generateRandomHexData {
+    Byte byte[16];
+    Byte hexA = 0, hexB = 0, hexC = 0;
+    for (int i = 0; i < 16; i ++) {
+        Byte randomInt = arc4random() % 256;
+        byte[i] = randomInt;
+        switch (i) {
+            case 2:
+                hexA = randomInt;
+                break;
+            case 4:
+                hexB = randomInt;
+                break;
+            case 9:
+                hexC = randomInt;
+                break;
+            default:
+                break;
+        }
+    }
+    NSData *randomData = [NSData dataWithBytes:byte length:16];
+    
+//    [randomData getBytes:&hexA range:NSMakeRange(2, 1)];
+//    [randomData getBytes:&hexB range:NSMakeRange(4, 1)];
+//    [randomData getBytes:&hexC range:NSMakeRange(9, 1)];
+    
+    _hexD = (hexA | hexB) ^ hexC;
+    NSLog(@"RandomData = %@, hexA = %x, hexB = %x, hexC = %x, hexD = %x", randomData, hexA, hexB, hexC, _hexD);
+    return randomData;
 }
 
 @end
