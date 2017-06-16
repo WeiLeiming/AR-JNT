@@ -125,7 +125,7 @@
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
     if ([peripheral.name hasPrefix:@"ARGUN"]) {
         NSLog(@"已发现设备 --->>> peripheral: %@, RSSI: %@, advertisementData: %@", peripheral, RSSI, advertisementData);
-        [self showInfoWithStatus:@"已发现设备"];
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"已发现设备", @"Localizable")];
         self.peripheral = peripheral;
         [central stopScan]; // 停止搜索
         [central connectPeripheral:peripheral options:nil]; // 连接设备
@@ -137,7 +137,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
     NSLog(@"连接成功 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:@"连接成功"];
+    [self showInfoWithStatus:QJLocalizedStringFromTable(@"连接成功", @"Localizable")];
     peripheral.delegate = self; // 设置外设的代理
     [peripheral readRSSI];
     [peripheral discoverServices:nil]; // 开始外设服务,传nil代表不过滤
@@ -148,7 +148,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"连接失败 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:@"连接失败"];
+    [self showInfoWithStatus:QJLocalizedStringFromTable(@"连接失败", @"Localizable")];
 }
 
 /**
@@ -156,7 +156,7 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"丢失连接 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:@"丢失连接"];
+    [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable")];
 }
 
 #pragma mark - CBPeripheralDelegate
