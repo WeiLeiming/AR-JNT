@@ -89,6 +89,9 @@
 - (void)connectBluetoothView:(QJConnectBluetoothView *)view languageBtnClicked:(UIButton *)sender {
     NSLog(@"change language button click");
     [QJLanguageManagerShare changeNowLanguage];
+    [self.bluetoothView removeFromSuperview];
+    self.bluetoothView = nil;
+    [self startFlashSequenceAnimation];
 }
 
 #pragma mark - CBCentralManagerDelegate
@@ -239,6 +242,9 @@
  */
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
     NSLog(@"更新Characteristic的Value --->>> %@", characteristic);
+    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]] && characteristic.value) {
+        
+    }
 }
 
 /**
@@ -267,9 +273,12 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
+//        [self uploadMacAddress:peripheral.identifier.UUIDString];
         [peripheral readValueForCharacteristic:characteristic];
+        
+        // 进入U3D界面
+//        [kAppDelegate showUnityWindow];
     }
-//    [self uploadMacAddress:peripheral.identifier.UUIDString];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {

@@ -22,4 +22,6 @@
 
 - (void)qj_startFlashSequenceAnimation;
 
+- (void)qj_stopFlashSequenceAnimation;
+
 @end

@@ -86,7 +86,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:language forKey:LANGUAGE_SET];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"language = %@, bundle = %@", language, self.bundle);
-    [self resetRootViewController];
+//    [self resetRootViewController];
 }
 
 - (void)resetRootViewController {

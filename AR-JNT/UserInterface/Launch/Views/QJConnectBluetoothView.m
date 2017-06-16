@@ -7,6 +7,7 @@
 //
 
 #import "QJConnectBluetoothView.h"
+#import <SDImageCache.h>
 
 @interface QJConnectBluetoothView ()
 
@@ -85,6 +86,10 @@
     self.flashViewImage.animationRepeatCount = 0;
     self.flashViewImage.animationImages = images;
     [self.flashViewImage startAnimating];
+}
+
+- (void)qj_stopFlashSequenceAnimation {
+    [self.flashViewImage stopAnimating];
 }
 
 @end
