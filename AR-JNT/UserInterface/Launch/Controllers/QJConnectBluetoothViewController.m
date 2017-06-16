@@ -12,6 +12,11 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
+#define kPeripheralLocalName                    @"ARGUN3"               // 外围设备名称
+#define kServiceUUID                            @"FFF4"                 // 服务的UUID
+#define kHandshakeCharacteristicUUID            @"FFF3"                 // 握手协议的特征UUID
+#define kDataCharacteristicUUID                 @"FFF5"                 // 数据传输的特征UUID
+
 @interface QJConnectBluetoothViewController () <CBCentralManagerDelegate, CBPeripheralDelegate, QJConnectBluetoothViewDelegate> {
     Byte _hexD;
 }
@@ -21,7 +26,7 @@
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
 
-@property (nonatomic, strong) CBCharacteristic *interestingCharacteristic;
+@property (nonatomic, strong) CBCharacteristic *dataCharacteristic;
 
 @end
 
@@ -112,7 +117,6 @@
             NSLog(@"手机蓝牙状态 --->>> CBCentralManagerStatePoweredOn");
             [self showInfoWithStatus:QJLocalizedStringFromTable(@"蓝牙已打开", @"Localizable")];
             [central scanForPeripheralsWithServices:nil options:nil]; // 搜索蓝牙设备
-//            [kAppDelegate showUnityWindow];
             break;
         default:
             break;
@@ -123,7 +127,7 @@
  发现外设
  */
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *, id> *)advertisementData RSSI:(NSNumber *)RSSI {
-    if ([peripheral.name hasPrefix:@"ARGUN"]) {
+    if ([peripheral.name hasPrefix:kPeripheralLocalName]) {
         NSLog(@"已发现设备 --->>> peripheral: %@, RSSI: %@, advertisementData: %@", peripheral, RSSI, advertisementData);
         [self showInfoWithStatus:QJLocalizedStringFromTable(@"已发现设备", @"Localizable")];
         self.peripheral = peripheral;
@@ -176,12 +180,12 @@
     CBService *interestingService;
     for (CBService *service in peripheral.services) {
         NSLog(@"Discovered service --->>> %@", service);
-        if ([service.UUID isEqual:[CBUUID UUIDWithString:@"FFF4"]]) {
+        if ([service.UUID isEqual:[CBUUID UUIDWithString:kServiceUUID]]) {
             interestingService = service;
         }
     }
     
-    // 没搜索到FFF4服务，断开连接重新搜索并返回
+    // 没搜索到服务，断开连接重新搜索并返回
     if (!interestingService) {
         // 断开连接后重新搜索
         [self.centralManager cancelPeripheralConnection:peripheral];
@@ -199,32 +203,32 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(nullable NSError *)error {
     NSLog(@"服务 --->>> service: %@", service);
     CBCharacteristic *interestingCharacteristic;
-    BOOL isFFF5Exist = NO;
-    BOOL isFFF3Exist = NO;
+    BOOL isDataCharacteristicExist = NO;
+    BOOL isHandshakeCharacteristicExist = NO;
     for (CBCharacteristic *characteristic in service.characteristics) {
         NSLog(@"Discovered characteristic --->>> %@", characteristic);
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF5"]]) {
+        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
             // 扳机
-            isFFF5Exist = YES;
-            self.interestingCharacteristic = characteristic;
-        } else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF3"]]) {
+            isDataCharacteristicExist = YES;
+            self.dataCharacteristic = characteristic;
+        } else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:kHandshakeCharacteristicUUID]]) {
             // 握手
-            isFFF3Exist = YES;
+            isHandshakeCharacteristicExist = YES;
             interestingCharacteristic = characteristic;
         }
     }
     
-    // FFF3和FFF5特征只要有一个不存在，就断开连接重新搜索并返回
-    if (!(isFFF5Exist && isFFF3Exist)) {
+    // 两个特征只要有一个不存在，就断开连接重新搜索并返回
+    if (!(isDataCharacteristicExist && isHandshakeCharacteristicExist)) {
         // 断开连接后重新搜索
         [self.centralManager cancelPeripheralConnection:peripheral];
         [self.centralManager scanForPeripheralsWithServices:nil options:nil];
         return;
     }
     
-    // 往FFF3写数据并监听
-    NSData *randomData = [self generateRandomHexData];
+    // 往握手特征写数据并监听
     if (interestingCharacteristic.properties == (CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify)) {
+        NSData *randomData = [self generateRandomHexData];
         [peripheral writeValue:randomData forCharacteristic:interestingCharacteristic type:CBCharacteristicWriteWithResponse];
         [peripheral setNotifyValue:YES forCharacteristic:interestingCharacteristic];
     }
@@ -247,13 +251,13 @@
         return;
     }
     
-    if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:@"FFF3"]] && characteristic.value) {
+    if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kHandshakeCharacteristicUUID]] && characteristic.value) {
         Byte backHexD;
         [characteristic.value getBytes:&backHexD range:NSMakeRange(13, 1)];
         if (_hexD == backHexD) {
-            NSLog(@"握手一致，开始监听FFF5");
-            if ((self.interestingCharacteristic.properties & CBCharacteristicPropertyNotify) == CBCharacteristicPropertyNotify) {
-                [peripheral setNotifyValue:YES forCharacteristic:self.interestingCharacteristic];
+            NSLog(@"握手一致，开始监听数据特征值");
+            if ((self.dataCharacteristic.properties & CBCharacteristicPropertyNotify) == CBCharacteristicPropertyNotify) {
+                [peripheral setNotifyValue:YES forCharacteristic:self.dataCharacteristic];
             }
         } else {
             // 断开连接后重新搜索
@@ -262,6 +266,8 @@
             return;
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
+    } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
+        [peripheral readValueForCharacteristic:characteristic];
     }
 //    [self uploadMacAddress:peripheral.identifier.UUIDString];
 }
