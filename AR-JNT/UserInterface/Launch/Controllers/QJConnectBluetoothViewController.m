@@ -27,6 +27,7 @@
 @property (nonatomic, strong) CBPeripheral *peripheral;
 
 @property (nonatomic, strong) CBCharacteristic *dataCharacteristic;
+@property (nonatomic, copy) NSString *macAddress;
 
 @end
 
@@ -133,6 +134,9 @@
     if ([peripheral.name hasPrefix:kPeripheralLocalName]) {
         NSLog(@"已发现设备 --->>> peripheral: %@, RSSI: %@, advertisementData: %@", peripheral, RSSI, advertisementData);
         [self showInfoWithStatus:QJLocalizedStringFromTable(@"已发现设备", @"Localizable")];
+        NSData *manufacturerData = advertisementData[@"kCBAdvDataManufacturerData"];
+        self.macAddress = [self convertMacAddressString:manufacturerData];
+        NSLog(@"Mac地址 --->>> Address: %@", self.macAddress);
         self.peripheral = peripheral;
         [central stopScan]; // 停止搜索
         [central connectPeripheral:peripheral options:nil]; // 连接设备
@@ -273,11 +277,11 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
-//        [self uploadMacAddress:peripheral.identifier.UUIDString];
+        [self uploadMacAddress:self.macAddress];
         [peripheral readValueForCharacteristic:characteristic];
         
         // 进入U3D界面
-//        [kAppDelegate showUnityWindow];
+        [kAppDelegate showUnityWindow];
     }
 }
 
@@ -315,6 +319,25 @@
     _hexD = (hexA | hexB) ^ hexC;
     NSLog(@"RandomData = %@, hexA = %x, hexB = %x, hexC = %x, hexD = %x", randomData, hexA, hexB, hexC, _hexD);
     return randomData;
+}
+
+- (NSString *)convertMacAddressString:(NSData *)valueData {
+    NSString *valueString = [NSString stringWithFormat:@"%@", valueData];
+    NSMutableString *macAddressString = [[NSMutableString alloc] init];
+    
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(23, 2)] uppercaseString]];
+    [macAddressString appendString:@":"];
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(25, 2)] uppercaseString]];
+    [macAddressString appendString:@":"];
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(28, 2)] uppercaseString]];
+    [macAddressString appendString:@":"];
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(30, 2)] uppercaseString]];
+    [macAddressString appendString:@":"];
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(32, 2)] uppercaseString]];
+    [macAddressString appendString:@":"];
+    [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(34, 2)] uppercaseString]];
+    
+    return macAddressString.copy;
 }
 
 @end
