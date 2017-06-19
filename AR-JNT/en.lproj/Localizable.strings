@@ -37,3 +37,5 @@
 "连接失败" = "Connection failed";
 
 "丢失连接" = "Lost connection";
+
+"网络不可用" = "The network is not available";

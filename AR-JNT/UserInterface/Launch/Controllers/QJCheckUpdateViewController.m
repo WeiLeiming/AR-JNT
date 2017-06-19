@@ -128,7 +128,7 @@
 
 #pragma mark - QJNoNetworkViewDelegate
 - (void)noNetworkView:(QJNoNetworkView *)view retryButtonClicked:(UIButton *)sender {
-    [self showInfoWithStatus:@"网络不可用"];
+    [self showInfoWithStatus:QJLocalizedStringFromTable(@"网络不可用", @"Localizable")];
 }
 
 @end
