@@ -13,4 +13,6 @@
 #define kFlashAnimationDuration                         0.5f
 #define kProgressHUDShowDuration                        0.5f
 
+#define kExpirationTime                                 20
+
 #endif /* QJAppCustomMacro_h */
