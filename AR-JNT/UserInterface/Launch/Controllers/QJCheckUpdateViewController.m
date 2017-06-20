@@ -11,6 +11,7 @@
 #import "QJNetworkingRequest.h"
 #import "QJConnectBluetoothViewController.h"
 #import "QJNoNetworkView.h"
+#import "QJDateHelper.h"
 
 @interface QJCheckUpdateViewController () <QJNoNetworkViewDelegate>
 
@@ -18,6 +19,12 @@
 @property (nonatomic, strong) QJNoNetworkView *noNetworkView;
 
 @property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) NSNumber *serviceState;
+
+@property (nonatomic, assign, getter=isAnimationOver) BOOL animationOver;
+@property (nonatomic, assign, getter=isFetchOver) BOOL fetchOver;
+@property (nonatomic, assign, getter=isOverdue) BOOL overdue;
 
 @end
 
@@ -32,11 +39,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initBackgroundUI];
-    NSNumber *systemState = [[NSUserDefaults standardUserDefaults] objectForKey:@"systemState"];
-    if ([systemState isEqual:@(1)] || systemState == nil) {
+    self.overdue = [[QJDateHelper helper] isOverdue];
+    
+    if (self.overdue) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusNotifation:) name:@"NetworkStatus" object:nil];
-    } else if ([systemState isEqual:@(0)]) {
-        self.noNetworkView.delegate = self;
+    } else {
+        [self startProgressSequenceAnimation];
     }
 }
 
@@ -64,6 +72,7 @@
         [_noNetworkView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsZero);
         }];
+        [kAppDelegate hideUnityWindow];
     }
     return _noNetworkView;
 }
@@ -90,9 +99,9 @@
 }
 
 - (void)timerCallBack {
+    self.animationOver = YES;
     [self.checkUpdateView qj_removeProgressSequenceAnimation];
-    QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
-    kAppDelegate.window.rootViewController = bluetoothVC;
+    [self jumpToNextInterface];
 }
 
 #pragma mark - Network
@@ -101,8 +110,9 @@
     NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/state/"];
     [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@", responseObject);
-        NSNumber *state = (NSNumber *)responseObject[@"state"];
-        [[NSUserDefaults standardUserDefaults] setObject:state forKey:@"systemState"];
+        self.fetchOver = YES;
+        self.serviceState = (NSNumber *)responseObject[@"state"];
+        [self jumpToNextInterface];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
     }];
@@ -129,6 +139,29 @@
 #pragma mark - QJNoNetworkViewDelegate
 - (void)noNetworkView:(QJNoNetworkView *)view retryButtonClicked:(UIButton *)sender {
     [self showInfoWithStatus:QJLocalizedStringFromTable(@"网络不可用", @"Localizable")];
+}
+
+#pragma mark - Jump
+- (void)jumpToNextInterface {
+    NSLog(@"serviceState:%@, isOverdue:%d, isAnimationOver:%d, isFetchOver:%d", self.serviceState, self.isOverdue, self.isAnimationOver, self.isFetchOver);
+    if (self.serviceState && [self.serviceState isEqual:@(0)]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkStatus" object:nil];
+        self.noNetworkView.delegate = self;
+        return;
+    }
+    
+    if (self.isOverdue) {
+        if (!(self.isAnimationOver && self.isFetchOver)) {
+            return;
+        }
+    } else {
+        if (!self.isAnimationOver) {
+            return;
+        }
+    }
+    
+    QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
+    kAppDelegate.window.rootViewController = bluetoothVC;
 }
 
 @end
