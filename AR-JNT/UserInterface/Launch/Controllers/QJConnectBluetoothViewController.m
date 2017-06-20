@@ -137,6 +137,10 @@
         NSData *manufacturerData = advertisementData[@"kCBAdvDataManufacturerData"];
         self.macAddress = [self convertMacAddressString:manufacturerData];
         NSLog(@"Mac地址 --->>> Address: %@", self.macAddress);
+        if ([self.macAddress isEqualToString:@"B6:0B:BA:13:D1:4E"]) {
+            self.macAddress = nil;
+            return;
+        }
         self.peripheral = peripheral;
         [central stopScan]; // 停止搜索
         [central connectPeripheral:peripheral options:nil]; // 连接设备
