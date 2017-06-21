@@ -210,6 +210,8 @@
 		D5A972561EE7B07400B1E632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A972551EE7B07400B1E632 /* CoreText.framework */; };
 		D5A972591EE7D5C500B1E632 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = D5A972581EE7D5C500B1E632 /* main.mm */; };
 		D5A9725B1EE7DDE100B1E632 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A9725A1EE7DDE100B1E632 /* GLKit.framework */; };
+		D5AAD1CA1EFA4E050061E706 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D5AAD1C91EFA4E050061E706 /* libsqlite3.tbd */; };
+		D5AAD1CD1EFA500A0061E706 /* QJAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAD1CC1EFA500A0061E706 /* QJAddressModel.m */; };
 		D5AEA1C51ED6BAF700955956 /* QJNetworkingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AEA1C41ED6BAF700955956 /* QJNetworkingRequest.m */; };
 		D5E36DD41EDE9EE400A86639 /* lamp_00000.png in Resources */ = {isa = PBXBuildFile; fileRef = D5E36DC11EDE9EE400A86639 /* lamp_00000.png */; };
 		D5E36DD51EDE9EE400A86639 /* lamp_00001.png in Resources */ = {isa = PBXBuildFile; fileRef = D5E36DC21EDE9EE400A86639 /* lamp_00001.png */; };
@@ -6419,6 +6421,9 @@
 		D5A972551EE7B07400B1E632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		D5A972581EE7D5C500B1E632 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = Main/main.mm; sourceTree = "<group>"; };
 		D5A9725A1EE7DDE100B1E632 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		D5AAD1C91EFA4E050061E706 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		D5AAD1CB1EFA500A0061E706 /* QJAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJAddressModel.h; sourceTree = "<group>"; };
+		D5AAD1CC1EFA500A0061E706 /* QJAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJAddressModel.m; sourceTree = "<group>"; };
 		D5AEA1C31ED6BAF700955956 /* QJNetworkingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJNetworkingRequest.h; sourceTree = "<group>"; };
 		D5AEA1C41ED6BAF700955956 /* QJNetworkingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJNetworkingRequest.m; sourceTree = "<group>"; };
 		D5E36DC11EDE9EE400A86639 /* lamp_00000.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lamp_00000.png; sourceTree = "<group>"; };
@@ -6450,6 +6455,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5AAD1CA1EFA4E050061E706 /* libsqlite3.tbd in Frameworks */,
 				D5A9725B1EE7DDE100B1E632 /* GLKit.framework in Frameworks */,
 				D5A972561EE7B07400B1E632 /* CoreText.framework in Frameworks */,
 				D5A972541EE7B06A00B1E632 /* AudioToolbox.framework in Frameworks */,
@@ -6497,6 +6503,7 @@
 		5FE60CA63C8A5C9E4A5FE051 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D5AAD1C91EFA4E050061E706 /* libsqlite3.tbd */,
 				D5A9725A1EE7DDE100B1E632 /* GLKit.framework */,
 				D5A972551EE7B07400B1E632 /* CoreText.framework */,
 				D5A972531EE7B06A00B1E632 /* AudioToolbox.framework */,
@@ -6617,6 +6624,8 @@
 		D5673E311ED5740500AAA2CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D5AAD1CB1EFA500A0061E706 /* QJAddressModel.h */,
+				D5AAD1CC1EFA500A0061E706 /* QJAddressModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -13982,6 +13991,7 @@
 				D5A971B61EE7AEB000B1E632 /* LJGL.cpp in Sources */,
 				D5A971D41EE7AEB000B1E632 /* Bulk_System_1.cpp in Sources */,
 				D5A971D71EE7AEB000B1E632 /* Bulk_UnityEngine.UI_1.cpp in Sources */,
+				D5AAD1CD1EFA500A0061E706 /* QJAddressModel.m in Sources */,
 				D5A971B81EE7AEB000B1E632 /* LJGLGlassDev1.cpp in Sources */,
 				D5A972071EE7AEB200B1E632 /* UnresolvedVirtualCallStubs.cpp in Sources */,
 				D5A971BF1EE7AEB000B1E632 /* Bulk_Generics_1.cpp in Sources */,

@@ -14,6 +14,8 @@ target 'AR-JNT' do
   pod 'SVProgressHUD'
 
   pod 'JKCategories'
+  
+  pod 'BGFMDB'
 
   target 'AR-JNTTests' do
     inherit! :search_paths

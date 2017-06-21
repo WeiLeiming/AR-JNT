@@ -9,6 +9,7 @@
 #import "QJConnectBluetoothViewController.h"
 #import "QJConnectBluetoothView.h"
 #import "QJNetworkingRequest.h"
+#import "QJAddressModel.h"
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) CBPeripheral *peripheral;
 
 @property (nonatomic, strong) CBCharacteristic *dataCharacteristic;
+@property (nonatomic, strong) QJAddressModel *addressModel;
 @property (nonatomic, copy) NSString *macAddress;
 
 @end
@@ -51,6 +53,14 @@
 }
 
 #pragma mark - Getter
+
+- (QJAddressModel *)addressModel {
+    if (!_addressModel) {
+        _addressModel = [[QJAddressModel alloc] init];
+    }
+    return _addressModel;
+}
+
 - (QJConnectBluetoothView *)bluetoothView {
     if (!_bluetoothView) {
         _bluetoothView = [[QJConnectBluetoothView alloc] init];
@@ -81,6 +91,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@%@", mainPath, address];
     [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@", responseObject);
+        [self.addressModel saveOrUpdate];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
     }];
@@ -281,7 +292,13 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
-        [self uploadMacAddress:self.macAddress];
+        NSArray *addressArray = [QJAddressModel findFormatSqlConditions:@"where %@=%@",sqlKey(@"address"),sqlValue(self.macAddress)];
+        NSLog(@"addressArray = %@", addressArray);
+        if (addressArray.count == 0) {
+            self.addressModel.address = self.macAddress;
+            [self uploadMacAddress:self.macAddress];
+        }
+
         [peripheral readValueForCharacteristic:characteristic];
         
         // 进入U3D界面
