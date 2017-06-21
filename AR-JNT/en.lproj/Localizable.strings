@@ -39,3 +39,7 @@
 "丢失连接" = "Lost connection";
 
 "网络不可用" = "The network is not available";
+
+"服务器发生错误" = "The server has encountered an error";
+
+"服务器已关闭" = "The server is down";

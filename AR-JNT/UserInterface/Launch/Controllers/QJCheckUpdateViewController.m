@@ -125,6 +125,8 @@
         [self jumpToNextInterface];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkStatus" object:nil];
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"服务器发生错误", @"Localizable")];
     }];
 }
 
@@ -156,7 +158,7 @@
     NSLog(@"serviceState:%@, isOverdue:%d, isAnimationOver:%d, isFetchOver:%d", self.serviceState, self.isOverdue, self.isAnimationOver, self.isFetchOver);
     if (self.serviceState && [self.serviceState isEqual:@(0)]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkStatus" object:nil];
-        self.noNetworkView.delegate = self;
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"服务器已关闭", @"Localizable")];
         return;
     }
     
@@ -174,7 +176,6 @@
     
     QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
     kAppDelegate.window.rootViewController = bluetoothVC;
-    
 }
 
 @end
