@@ -12,7 +12,7 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
-#define kPeripheralLocalName                    @"ARGUN3"               // 外围设备名称
+#define kPeripheralLocalName                    @"AR-JNT"               // 外围设备名称
 #define kServiceUUID                            @"FFF4"                 // 服务的UUID
 #define kHandshakeCharacteristicUUID            @"FFF3"                 // 握手协议的特征UUID
 #define kDataCharacteristicUUID                 @"FFF5"                 // 数据传输的特征UUID
@@ -325,6 +325,7 @@
     return randomData;
 }
 
+#pragma mark - Util
 - (NSString *)convertMacAddressString:(NSData *)valueData {
     NSString *valueString = [NSString stringWithFormat:@"%@", valueData];
     NSMutableString *macAddressString = [[NSMutableString alloc] init];
