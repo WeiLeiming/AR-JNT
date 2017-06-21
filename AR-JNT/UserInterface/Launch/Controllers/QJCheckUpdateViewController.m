@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSNumber *serviceState;
 
+@property (nonatomic, strong) QJDateHelper *dateHelper;
+
 @property (nonatomic, assign, getter=isAnimationOver) BOOL animationOver;
 @property (nonatomic, assign, getter=isFetchOver) BOOL fetchOver;
 @property (nonatomic, assign, getter=isOverdue) BOOL overdue;
@@ -39,9 +41,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initBackgroundUI];
-    self.overdue = [[QJDateHelper helper] isOverdue];
+    self.overdue = self.dateHelper.isOverdue;
     
-    if (self.overdue) {
+    if (self.isOverdue) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusNotifation:) name:@"NetworkStatus" object:nil];
     } else {
         [self startProgressSequenceAnimation];
@@ -54,6 +56,14 @@
 }
 
 #pragma mark - Getter
+
+- (QJDateHelper *)dateHelper {
+    if (!_dateHelper) {
+        _dateHelper = [[QJDateHelper alloc] init];
+    }
+    return _dateHelper;
+}
+
 - (QJCheckUpdateView *)checkUpdateView {
     if (!_checkUpdateView) {
         _checkUpdateView = [[QJCheckUpdateView alloc] init];
@@ -151,7 +161,9 @@
     }
     
     if (self.isOverdue) {
-        if (!(self.isAnimationOver && self.isFetchOver)) {
+        if (self.isAnimationOver && self.isFetchOver) {
+            [self.dateHelper qj_saveCurrentDate];
+        } else {
             return;
         }
     } else {
@@ -162,6 +174,7 @@
     
     QJConnectBluetoothViewController *bluetoothVC = [[QJConnectBluetoothViewController alloc] init];
     kAppDelegate.window.rootViewController = bluetoothVC;
+    
 }
 
 @end

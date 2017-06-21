@@ -10,13 +10,12 @@
 
 @interface QJDateHelper : NSObject
 
-+ (QJDateHelper *)helper;
+@property (nonatomic, strong) NSDate *currentDate;
+@property (nonatomic, assign, readonly, getter=isOverdue) BOOL overdue;
 
 /**
- 时间期限是否到期
- 
- @return 到期or没到期
+ 存储当前时间
  */
-- (BOOL)isOverdue;
+- (void)qj_saveCurrentDate;
 
 @end

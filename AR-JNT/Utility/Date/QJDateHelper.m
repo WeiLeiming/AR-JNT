@@ -12,42 +12,53 @@
 
 @interface QJDateHelper ()
 
-@property (nonatomic, strong) NSDate *currentDate;
-
 @end
 
 @implementation QJDateHelper
 
-+ (QJDateHelper *)helper {
-    return [[QJDateHelper alloc] init];
-}
+#pragma mark - Getter
 
+/**
+ 获取当前时间
+ */
 - (NSDate *)currentDate {
     if (!_currentDate) {
-        _currentDate = [self getCurrentDate];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+        _currentDate = [NSDate date];
+        NSLog(@"currentDate = %@", _currentDate);
     }
     return _currentDate;
 }
 
 /**
- 获取当前时间
-
- @return 当前时间
+ 时间期限是否到期
  */
-- (NSDate *)getCurrentDate {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+- (BOOL)isOverdue {
+    NSTimeInterval overdueInterval = kExpirationTime * 24 * 60 * 60;
     
-    return [NSDate date];
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:DATE_SET];
+    NSLog(@"saveDate = %@", date);
+    if (!date) {
+        return YES;
+    }
+    
+    NSTimeInterval interval = [self calculateTimeIntervalSinceDate:date];
+    
+    return interval > overdueInterval ? YES : NO;
 }
+
+#pragma mark - Public Method
 
 /**
  存储当前时间
  */
-- (void)saveCurrentDate {
+- (void)qj_saveCurrentDate {
     [[NSUserDefaults standardUserDefaults] setObject:self.currentDate forKey:DATE_SET];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+#pragma mark - Private Method
 
 /**
  计算当前时间与给定时间的时间间隔
@@ -59,30 +70,6 @@
     NSTimeInterval interval = [self.currentDate timeIntervalSinceDate:date];
     
     return interval;
-}
-
-/**
- 时间期限是否到期
-
- @return 到期or没到期
- */
-- (BOOL)isOverdue {
-    NSTimeInterval expirationTime = kExpirationTime * 24 * 60 * 60;
-    
-    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:DATE_SET];
-    if (!date) {
-        [self saveCurrentDate];
-        return YES;
-    }
-    
-    NSTimeInterval interval = [self calculateTimeIntervalSinceDate:date];
-    
-    if (interval > expirationTime) {
-        [self saveCurrentDate];
-        return YES;
-    } else {
-        return NO;
-    }
 }
 
 @end
