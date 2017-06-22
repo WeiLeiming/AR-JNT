@@ -27,9 +27,12 @@
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
 
-@property (nonatomic, strong) CBCharacteristic *dataCharacteristic;
-@property (nonatomic, strong) QJAddressModel *addressModel;
-@property (nonatomic, copy) NSString *macAddress;
+@property (nonatomic, strong) CBCharacteristic *dataCharacteristic;     // 外设特征，扣动扳机回传数据
+@property (nonatomic, strong) QJAddressModel *addressModel;             // 地址模型，用于数据库存储
+@property (nonatomic, copy) NSString *macAddress;                       // mac地址
+
+@property (nonatomic, strong) NSData *pressData;                        // 扳机扣下回传的数据
+@property (nonatomic, strong) NSData *releaseData;                      // 扳机松开回传的数据
 
 @end
 
@@ -53,6 +56,22 @@
 }
 
 #pragma mark - Getter
+
+- (NSData *)pressData {
+    if (!_pressData) {
+        Byte bytes[16] = {0x8f, 0xe9, 0xd7, 0xe1, 0x83, 0x07, 0x8a, 0xb8, 0x74, 0xbc, 0xca, 0xd3, 0x30, 0xb0, 0x14, 0x9a};
+        _pressData = [NSData dataWithBytes:bytes length:16];
+    }
+    return _pressData;
+}
+
+- (NSData *)releaseData {
+    if (!_releaseData) {
+        Byte bytes[16] = {0x27, 0xb8, 0xcc, 0x3d, 0x6a, 0x4b, 0x0b, 0xc4, 0x04, 0x98, 0xf0, 0xb6, 0xe5, 0x6a, 0x49, 0xeb};
+        _releaseData = [NSData dataWithBytes:bytes length:16];
+    }
+    return _releaseData;
+}
 
 - (QJAddressModel *)addressModel {
     if (!_addressModel) {
@@ -262,7 +281,13 @@
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
     NSLog(@"更新Characteristic的Value --->>> %@", characteristic);
     if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]] && characteristic.value) {
-        
+        if ([characteristic.value isEqualToData:self.pressData]) {
+            NSLog(@"扳机扣下");
+            UnitySendMessage("Player(Clone)", "AndroidMessgae", "gunon");
+        } else if ([characteristic.value isEqualToData:self.releaseData]) {
+            NSLog(@"扳机松开");
+            UnitySendMessage("Player(Clone)", "AndroidMessgae", "gunoff");
+        }
     }
 }
 
