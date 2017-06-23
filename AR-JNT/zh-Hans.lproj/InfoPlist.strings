@@ -8,3 +8,6 @@
 
 // App名称
 CFBundleDisplayName = "AR-JNT";
+
+// 权限
+NSCameraUsageDescription = "App需要您的同意才能访问相机";
