@@ -8625,10 +8625,10 @@
 		D57072EA1ED4167F00F0B064 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				D57072EE1ED4167F00F0B064 /* QJMacro.h */,
 				D57072EB1ED4167F00F0B064 /* QJAppCustomMacro.h */,
 				D57072EC1ED4167F00F0B064 /* QJAppInfoMacro.h */,
 				D57072ED1ED4167F00F0B064 /* QJCommonMacro.h */,
-				D57072EE1ED4167F00F0B064 /* QJMacro.h */,
 				D57072EF1ED4167F00F0B064 /* QJNetWorkingMacro.h */,
 			);
 			path = Macro;

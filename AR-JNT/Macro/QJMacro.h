@@ -9,7 +9,7 @@
 #ifndef QJMacro_h
 #define QJMacro_h
 
-#define AppDebugMode
+//#define AppDebugMode
 
 #ifdef AppDebugMode
     #define kTestServerOpen      //负责调整Debug模式下的服务器地址
