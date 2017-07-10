@@ -7,7 +7,19 @@
 */
 
 // App名称
+
 CFBundleDisplayName = "AR-JNT";
 
 // 权限
+
 NSCameraUsageDescription = "App need your consent to access the camera";
+
+NSCalendarsUsageDescription = "App needs your consent";
+
+NSPhotoLibraryUsageDescription = "App needs your consent";
+
+NSBluetoothPeripheralUsageDescription = "App needs your consent";
+
+NSMicrophoneUsageDescription = "App needs your consent";
+
+NSMotionUsageDescription = "App needs your consent";
