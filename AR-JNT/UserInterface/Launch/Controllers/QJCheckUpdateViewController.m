@@ -109,6 +109,8 @@
 }
 
 - (void)timerCallBack {
+    [self.timer invalidate];
+    self.timer = nil;
     self.animationOver = YES;
     [self.checkUpdateView qj_removeProgressSequenceAnimation];
     [self jumpToNextInterface];
@@ -125,8 +127,15 @@
         [self jumpToNextInterface];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkStatus" object:nil];
-        [self showInfoWithStatus:QJLocalizedStringFromTable(@"服务器发生错误", @"Localizable")];
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"发生错误，请重试", @"Localizable")];
+        if (self.timer) {
+            [self.timer invalidate];
+            self.timer = nil;
+            [self.checkUpdateView qj_removeProgressSequenceAnimation];
+        }
+        self.fetchOver = NO;
+        self.animationOver = NO;
+        self.noNetworkView.delegate = self;
     }];
 }
 
@@ -137,6 +146,10 @@
     } else if (kAppDelegate.networkStatus == AFNetworkReachabilityStatusNotReachable) {
         self.noNetworkView.delegate = self;
     } else {
+        if (self.noNetworkView) {
+            [self.noNetworkView removeFromSuperview];
+            self.noNetworkView = nil;
+        }
         [self startProgressSequenceAnimation];
         [self fetchSyetemStatus];
     }
@@ -150,7 +163,18 @@
 
 #pragma mark - QJNoNetworkViewDelegate
 - (void)noNetworkView:(QJNoNetworkView *)view retryButtonClicked:(UIButton *)sender {
-    [self showInfoWithStatus:QJLocalizedStringFromTable(@"网络不可用", @"Localizable")];
+    if (kAppDelegate.networkStatus == AFNetworkReachabilityStatusNotReachable) {
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"网络不可用", @"Localizable")];
+        return;
+    }
+    if (self.noNetworkView) {
+        [self.noNetworkView removeFromSuperview];
+        self.noNetworkView = nil;
+    }
+    if (self.isOverdue) {
+        [self fetchSyetemStatus];
+    }
+    [self startProgressSequenceAnimation];
 }
 
 #pragma mark - Jump

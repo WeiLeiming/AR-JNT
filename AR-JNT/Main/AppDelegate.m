@@ -30,7 +30,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self checkNetworkStatus];
     
     _unityController = [[UnityAppController alloc] init];
     [_unityController application:application didFinishLaunchingWithOptions:launchOptions];
@@ -39,6 +38,9 @@
     QJCheckUpdateViewController *vc = [[QJCheckUpdateViewController alloc] init];
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
+    
+    [self checkNetworkStatus];
+    
     return YES;
 }
 
