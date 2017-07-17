@@ -90,8 +90,10 @@
 }
 
 - (void)qj_removeProgressSequenceAnimation {
-    [self.progressImageView removeFromSuperview];
-    self.progressImageView = nil;
+    if (self.progressImageView) {
+        [self.progressImageView removeFromSuperview];
+        self.progressImageView = nil;
+    }
 }
 
 @end
