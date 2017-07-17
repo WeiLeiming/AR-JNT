@@ -86,11 +86,12 @@ static AFHTTPSessionManager *manager = nil;
             }
         } failure:^(NSURLSessionTask *task, NSError *error) {
             if (failure) {
-                if (error.code == -1009) {
-                    [SVProgressHUD showErrorWithStatus:@"网络已断开,请检查网络"];
-                }else{
-                    failure(task,error);
-                }
+                failure(task,error);
+//                if (error.code == -1009) {
+//                    [SVProgressHUD showErrorWithStatus:@"网络已断开,请检查网络"];
+//                }else{
+//                    failure(task,error);
+//                }
             }else{
                 NSLog(@"服务器异常");
             }
