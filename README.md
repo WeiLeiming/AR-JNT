@@ -1,8 +1,8 @@
 # AR-JNT
 
-![platform](https://img.shields.io/badge/Platform-iOS-blue.svg?style=flat)
-![support](https://img.shields.io/badge/Support-iOS%209%2B-blue.svg?style=flat)
-![language](https://img.shields.io/badge/Language-Objective--C-blue.svg?style=flat)
+![platform](https://img.shields.io/badge/platform-iOS-blue.svg?style=flat)
+![support](https://img.shields.io/badge/support-iOS%209%2B-blue.svg?style=flat)
+![language](https://img.shields.io/badge/language-Objective--C-blue.svg?style=flat)
 
 AR JNT手枪配套工程
 
