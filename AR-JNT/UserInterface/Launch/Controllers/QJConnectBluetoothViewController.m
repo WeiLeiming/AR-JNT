@@ -393,4 +393,27 @@
     return macAddressString.copy;
 }
 
+// Unused Method
+
+- (void)checkCameraAuthorizationStatus {
+    // 读取设备授权状态
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提醒" message:@"相机权限未打开，前往设置" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *settingAction = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self openApplicationSettings];
+        }];
+        [alertController addAction:settingAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)openApplicationSettings {
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
 @end
