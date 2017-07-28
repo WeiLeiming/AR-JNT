@@ -99,8 +99,12 @@
 
 #pragma mark - HUD
 - (void)showInfoWithStatus:(NSString *)status {
+    [self showInfoWithStatus:status dismissWithDelay:kProgressHUDShowDuration];
+}
+
+- (void)showInfoWithStatus:(NSString *)status dismissWithDelay:(NSTimeInterval)delay {
     [SVProgressHUD showImage:nil status:status];
-    [SVProgressHUD dismissWithDelay:kProgressHUDShowDuration];
+    [SVProgressHUD dismissWithDelay:delay];
 }
 
 #pragma mark - Network
@@ -201,7 +205,8 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"丢失连接 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable")];
+    [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable") dismissWithDelay:2.0];
+    [kAppDelegate hideUnityWindow];
 }
 
 #pragma mark - CBPeripheralDelegate
@@ -211,6 +216,7 @@
 - (void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(NSNumber *)RSSI error:(nullable NSError *)error {
     int rssi = abs([RSSI intValue]);
     CGFloat ci = (rssi - 49) / (10 * 4.);
+    #pragma unused (ci)
     NSLog(@"已读取信号强度值 --->>> %@, 距离: %.1fm", peripheral, pow(10, ci));
 }
 
