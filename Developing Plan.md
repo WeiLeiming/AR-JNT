@@ -1,4 +1,6 @@
-# AR-JNT Gun v2.2 developing plan
+# Developing Plan
+
+## v2.2
 
 1. 删除15天校验
 2. 删除本地蓝牙MAC地址数据库
@@ -8,7 +10,7 @@
    2. 异常，提示盗版
    3. 请求失败，提醒服务器或网络错误，弹框重试
 
-# AR-JNT Gun v2.1 developing plan
+## v2.1
 
 1. 游戏界面断开蓝牙返回蓝牙连接页面
 2. 关闭摄像头权限，再次进入增加设置提醒

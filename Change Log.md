@@ -1,4 +1,6 @@
-# AR-JNT Gun v2.0 change log
+# Change Log
+
+## v2.0
 
 1. 新增4新游戏
 2. fix bugs
