@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSData *pressData;                        // 扳机扣下回传的数据
 @property (nonatomic, strong) NSData *releaseData;                      // 扳机松开回传的数据
 
+@property (nonatomic, assign, getter=isEnterGame) BOOL enterGame;       // 是否配对成功进入游戏
+
 @end
 
 @implementation QJConnectBluetoothViewController
@@ -205,8 +207,15 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"丢失连接 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable") dismissWithDelay:2.0];
-    [kAppDelegate hideUnityWindow];
+    if (self.isEnterGame) {
+        self.enterGame = NO;
+        [kAppDelegate hideUnityWindow];
+        [self showAlertControllerWithTitle:@"提醒" message:@"蓝牙已断开，请重新连接" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+            [central scanForPeripheralsWithServices:nil options:nil];
+        }];
+    } else {
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable")];
+    }
 }
 
 #pragma mark - CBPeripheralDelegate
@@ -332,7 +341,8 @@
 
         [peripheral readValueForCharacteristic:characteristic];
         
-        // 进入U3D界面
+        // 配对成功，进入U3D界面
+        self.enterGame = YES;
         [kAppDelegate showUnityWindow];
     }
 }
@@ -393,27 +403,13 @@
     return macAddressString.copy;
 }
 
-// Unused Method
-
-- (void)checkCameraAuthorizationStatus {
-    // 读取设备授权状态
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提醒" message:@"相机权限未打开，前往设置" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *settingAction = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self openApplicationSettings];
-        }];
-        [alertController addAction:settingAction];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-}
-
-- (void)openApplicationSettings {
-    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        [[UIApplication sharedApplication] openURL:url];
-    }
+- (void)showAlertControllerWithTitle:(NSString *)title message:(NSString *)message actionTitle:(NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:QJLocalizedStringFromTable(title, @"Localizable") message:QJLocalizedStringFromTable(message, @"Localizable") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *settingAction = [UIAlertAction actionWithTitle:QJLocalizedStringFromTable(actionTitle, @"Localizable") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        handler(action);
+    }];
+    [alertController addAction:settingAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
