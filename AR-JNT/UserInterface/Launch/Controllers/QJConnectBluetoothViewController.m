@@ -104,9 +104,22 @@
     [self showInfoWithStatus:status dismissWithDelay:kProgressHUDShowDuration];
 }
 
+- (void)showInfoWithStatus:(NSString *)status completion:(void (^)(void))completion {
+    [self showInfoWithStatus:status dismissWithDelay:kProgressHUDShowDuration completion:^{
+        completion();
+    }];
+}
+
 - (void)showInfoWithStatus:(NSString *)status dismissWithDelay:(NSTimeInterval)delay {
     [SVProgressHUD showImage:nil status:status];
     [SVProgressHUD dismissWithDelay:delay];
+}
+
+- (void)showInfoWithStatus:(NSString *)status dismissWithDelay:(NSTimeInterval)delay completion:(void (^)(void))completion {
+    [SVProgressHUD showImage:nil status:status];
+    [SVProgressHUD dismissWithDelay:delay completion:^{
+        completion();
+    }];
 }
 
 #pragma mark - Network
@@ -341,9 +354,25 @@
 
         [peripheral readValueForCharacteristic:characteristic];
         
-        // 配对成功，进入U3D界面
+        // 配对成功，确认可以进入U3D界面
         self.enterGame = YES;
-        [kAppDelegate showUnityWindow];
+        
+        // 检查相机权限
+        [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
+            if (authorized) {
+                [kAppDelegate showUnityWindow];
+            } else {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [kAppDelegate showUnityWindow];
+                    } else {
+                        [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
+                            [kAppDelegate showUnityWindow];
+                        }];
+                    }
+                }];
+            }
+        }];
     }
 }
 
@@ -410,6 +439,27 @@
     }];
     [alertController addAction:settingAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)checkCameraAuthorizationStatusCompletionHandler:(void (^)(BOOL authorized))handler {
+    // 读取设备授权状态
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    switch (authStatus) {
+        case AVAuthorizationStatusNotDetermined:
+            handler(false);
+            break;
+        case AVAuthorizationStatusRestricted:
+            handler(false);
+            break;
+        case AVAuthorizationStatusDenied:
+            handler(false);
+            break;
+        case AVAuthorizationStatusAuthorized:
+            handler(true);
+            break;
+        default:
+            break;
+    }
 }
 
 @end

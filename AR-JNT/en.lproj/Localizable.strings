@@ -49,3 +49,5 @@
 "蓝牙已断开，请重新连接" = "Bluetooth is disconnected, please reconnect";
 
 "确定" = "Determine";
+
+"相机未授权，部分功能无法使用，请前往设置开启" = "Camera is not authorized, some features can not be used, please go to set the open";

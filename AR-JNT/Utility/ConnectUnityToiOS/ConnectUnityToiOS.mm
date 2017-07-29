@@ -19,12 +19,27 @@
     return _instance;
 }
 
-- (void)checkCameraAuthorizationStatus {
+- (NSInteger)checkCameraAuthorizationStatus {
     // 读取设备授权状态
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) {
-        [self openApplicationSettings];
+    switch (authStatus) {
+        case AVAuthorizationStatusNotDetermined:
+            return 0;
+        case AVAuthorizationStatusRestricted:
+            return 1;
+        case AVAuthorizationStatusDenied:
+            return 1;
+        case AVAuthorizationStatusAuthorized:
+            return 2;
+        default:
+            break;
     }
+}
+
+- (void)requestCameraAccessPermissionHandler:(void (^)(BOOL granted))handler {
+    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+        handler(granted);
+    }];
 }
 
 - (void)openApplicationSettings {
@@ -41,8 +56,13 @@
 extern "C" {
 #endif
     
-    void checkCameraAuthorizationStatus() {
-        [[ConnectUnityToiOS sharedInstance] checkCameraAuthorizationStatus];
+    int checkCameraAuthorizationStatus() {
+        NSInteger status = [[ConnectUnityToiOS sharedInstance] checkCameraAuthorizationStatus];
+        return int(status);
+    }
+    
+    void requestCameraAccessPermission() {
+        [[ConnectUnityToiOS sharedInstance] requestCameraAccessPermissionHandler:nil];
     }
     
 #ifdef __cplusplus
