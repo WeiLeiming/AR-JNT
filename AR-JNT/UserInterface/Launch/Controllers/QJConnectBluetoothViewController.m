@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSData *pressData;                        // 扳机扣下回传的数据
 @property (nonatomic, strong) NSData *releaseData;                      // 扳机松开回传的数据
 
+@property (nonatomic, assign, getter=isEnterGame) BOOL enterGame;       // 是否配对成功进入游戏
+
 @end
 
 @implementation QJConnectBluetoothViewController
@@ -99,8 +101,25 @@
 
 #pragma mark - HUD
 - (void)showInfoWithStatus:(NSString *)status {
+    [self showInfoWithStatus:status dismissWithDelay:kProgressHUDShowDuration];
+}
+
+- (void)showInfoWithStatus:(NSString *)status completion:(void (^)(void))completion {
+    [self showInfoWithStatus:status dismissWithDelay:kProgressHUDShowDuration completion:^{
+        completion();
+    }];
+}
+
+- (void)showInfoWithStatus:(NSString *)status dismissWithDelay:(NSTimeInterval)delay {
     [SVProgressHUD showImage:nil status:status];
-    [SVProgressHUD dismissWithDelay:kProgressHUDShowDuration];
+    [SVProgressHUD dismissWithDelay:delay];
+}
+
+- (void)showInfoWithStatus:(NSString *)status dismissWithDelay:(NSTimeInterval)delay completion:(void (^)(void))completion {
+    [SVProgressHUD showImage:nil status:status];
+    [SVProgressHUD dismissWithDelay:delay completion:^{
+        completion();
+    }];
 }
 
 #pragma mark - Network
@@ -201,7 +220,15 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error {
     NSLog(@"丢失连接 --->>> peripheral: %@", peripheral);
-    [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable")];
+    if (self.isEnterGame) {
+        self.enterGame = NO;
+        [kAppDelegate hideUnityWindow];
+        [self showAlertControllerWithTitle:@"提醒" message:@"蓝牙已断开，请重新连接" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+            [central scanForPeripheralsWithServices:nil options:nil];
+        }];
+    } else {
+        [self showInfoWithStatus:QJLocalizedStringFromTable(@"丢失连接", @"Localizable")];
+    }
 }
 
 #pragma mark - CBPeripheralDelegate
@@ -211,6 +238,7 @@
 - (void)peripheral:(CBPeripheral *)peripheral didReadRSSI:(NSNumber *)RSSI error:(nullable NSError *)error {
     int rssi = abs([RSSI intValue]);
     CGFloat ci = (rssi - 49) / (10 * 4.);
+    #pragma unused (ci)
     NSLog(@"已读取信号强度值 --->>> %@, 距离: %.1fm", peripheral, pow(10, ci));
 }
 
@@ -326,8 +354,25 @@
 
         [peripheral readValueForCharacteristic:characteristic];
         
-        // 进入U3D界面
-        [kAppDelegate showUnityWindow];
+        // 配对成功，确认可以进入U3D界面
+        self.enterGame = YES;
+        
+        // 检查相机权限
+        [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
+            if (authorized) {
+                [kAppDelegate showUnityWindow];
+            } else {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    if (granted) {
+                        [kAppDelegate showUnityWindow];
+                    } else {
+                        [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
+                            [kAppDelegate showUnityWindow];
+                        }];
+                    }
+                }];
+            }
+        }];
     }
 }
 
@@ -385,6 +430,36 @@
     [macAddressString appendString:[[valueString substringWithRange:NSMakeRange(34, 2)] uppercaseString]];
     
     return macAddressString.copy;
+}
+
+- (void)showAlertControllerWithTitle:(NSString *)title message:(NSString *)message actionTitle:(NSString *)actionTitle handler:(void (^ __nullable)(UIAlertAction *action))handler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:QJLocalizedStringFromTable(title, @"Localizable") message:QJLocalizedStringFromTable(message, @"Localizable") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *settingAction = [UIAlertAction actionWithTitle:QJLocalizedStringFromTable(actionTitle, @"Localizable") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        handler(action);
+    }];
+    [alertController addAction:settingAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)checkCameraAuthorizationStatusCompletionHandler:(void (^)(BOOL authorized))handler {
+    // 读取设备授权状态
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    switch (authStatus) {
+        case AVAuthorizationStatusNotDetermined:
+            handler(false);
+            break;
+        case AVAuthorizationStatusRestricted:
+            handler(false);
+            break;
+        case AVAuthorizationStatusDenied:
+            handler(false);
+            break;
+        case AVAuthorizationStatusAuthorized:
+            handler(true);
+            break;
+        default:
+            break;
+    }
 }
 
 @end
