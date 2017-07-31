@@ -82,7 +82,6 @@
         [_noNetworkView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsZero);
         }];
-        [kAppDelegate hideUnityWindow];
     }
     return _noNetworkView;
 }

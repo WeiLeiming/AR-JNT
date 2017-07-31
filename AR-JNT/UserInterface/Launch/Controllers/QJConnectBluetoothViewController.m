@@ -47,7 +47,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [kAppDelegate hideUnityWindow];
     [self startFlashSequenceAnimation];
     self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
