@@ -42,13 +42,7 @@
     
     // 默认是中文
     if (!tmp) {
-        NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-        NSString *currentLanguage = languages.firstObject;
-        if ([currentLanguage hasPrefix:@"zh-Hans"]) {
-            tmp = CNS;
-        } else {
-            tmp = EN;
-        }
+        tmp = [self getSystemCurrentLanguage];
         [[NSUserDefaults standardUserDefaults] setObject:tmp forKey:LANGUAGE_SET];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
@@ -58,17 +52,16 @@
 }
 
 + (void)initLanguageFromSystem {
-    NSString *tmp;
-    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
-    NSString *currentLanguage = languages.firstObject;
-    if ([currentLanguage hasPrefix:@"zh-Hans"]) {
-        tmp = CNS;
-    } else {
-        tmp = EN;
-    }
+    NSString *tmp = [self getSystemCurrentLanguage];
     NSString *path = [[NSBundle mainBundle] pathForResource:tmp ofType:@"lproj"];
     QJLanguageManagerShare.language = tmp;
     QJLanguageManagerShare.bundle = [NSBundle bundleWithPath:path];
+}
+
++ (NSString *)getSystemCurrentLanguage {
+    NSArray *languages = [[NSUserDefaults standardUserDefaults] valueForKey:@"AppleLanguages"];
+    NSString *currentLanguage = languages.firstObject;
+    return [currentLanguage hasPrefix:@"zh-Hans"] ? CNS : EN;
 }
 
 - (NSString *)getStringForKey:(NSString *)key withTable:(NSString *)table {

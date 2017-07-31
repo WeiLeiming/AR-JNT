@@ -24,13 +24,13 @@
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     switch (authStatus) {
         case AVAuthorizationStatusNotDetermined:
-            return 0;
+            return 0;   // 未授权
         case AVAuthorizationStatusRestricted:
             return 1;
         case AVAuthorizationStatusDenied:
-            return 1;
+            return 1;   // 拒绝授权
         case AVAuthorizationStatusAuthorized:
-            return 2;
+            return 2;   // 已授权
         default:
             break;
     }
@@ -50,6 +50,15 @@
     }
 }
 
+- (NSInteger)getSystemCurrentLanguage {
+    NSString *tmp = [QJLanguageManage getSystemCurrentLanguage];
+    if ([tmp isEqualToString:@"zh-Hans"]) {
+        return 0;   // 中文
+    } else {
+        return 1;   // 英文
+    }
+}
+
 @end
 
 #ifdef __cplusplus
@@ -63,6 +72,11 @@ extern "C" {
     
     void requestCameraAccessPermission() {
         [[ConnectUnityToiOS sharedInstance] requestCameraAccessPermissionHandler:nil];
+    }
+    
+    int getSystemCurrentLanguage() {
+        NSInteger language = [[ConnectUnityToiOS sharedInstance] getSystemCurrentLanguage];
+        return int(language);
     }
     
 #ifdef __cplusplus
