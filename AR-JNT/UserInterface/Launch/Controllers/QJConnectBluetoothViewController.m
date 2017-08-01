@@ -51,7 +51,22 @@
     [self startFlashSequenceAnimation];
     [self configureVolume];
     [self addNotification];
-    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    // 检查相机权限
+    [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
+        if (authorized) {
+            self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+        } else {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted) {
+                    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+                } else {
+                    [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
+                        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+                    }];
+                }
+            }];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,19 +111,6 @@
     return _bluetoothView;
 }
 
-/**
- *  配置系统音量
- */
-- (void)configureVolume {
-    // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
-    NSError *setCategoryError = nil;
-    BOOL success = [[AVAudioSession sharedInstance]
-                    setCategory: AVAudioSessionCategoryPlayback
-                    error: &setCategoryError];
-    
-    if (!success) { /* handle the error in setCategoryError */ }
-}
-
 #pragma mark - Flash Animation
 - (void)startFlashSequenceAnimation {
     [self.bluetoothView qj_startFlashSequenceAnimation];
@@ -144,7 +146,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@%@", mainPath, address];
     [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@", responseObject);
-        [self.addressModel saveOrUpdate];
+        [self.addressModel bg_saveOrUpdate];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
     }];
@@ -360,7 +362,7 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
-        NSArray *addressArray = [QJAddressModel findFormatSqlConditions:@"where %@=%@",sqlKey(@"address"),sqlValue(self.macAddress)];
+        NSArray *addressArray = [QJAddressModel bg_findFormatSqlConditions:@"where %@=%@",bg_sqlKey(@"address"),bg_sqlValue(self.macAddress)];
         NSLog(@"addressArray = %@", addressArray);
         if (addressArray.count == 0) {
             self.addressModel.address = self.macAddress;
@@ -371,23 +373,7 @@
         
         // 配对成功，确认可以进入U3D界面
         self.enterGame = YES;
-        
-        // 检查相机权限
-        [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
-            if (authorized) {
-                [kAppDelegate showUnityWindow];
-            } else {
-                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                    if (granted) {
-                        [kAppDelegate showUnityWindow];
-                    } else {
-                        [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
-                            [kAppDelegate showUnityWindow];
-                        }];
-                    }
-                }];
-            }
-        }];
+        [kAppDelegate showUnityWindow];
     }
 }
 
@@ -477,6 +463,19 @@
     }
 }
 
+/**
+ *  配置系统音量
+ */
+- (void)configureVolume {
+    // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
+    NSError *setCategoryError = nil;
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryPlayback
+                    error: &setCategoryError];
+    
+    if (!success) { /* handle the error in setCategoryError */ }
+}
+
 #pragma mark - Notification
 
 - (void)addNotification {
@@ -489,7 +488,9 @@
  */
 - (void)appDidEnterBackground {
     NSLog(@"应用退到后台");
-    [self.centralManager cancelPeripheralConnection:self.peripheral];
+    if (self.centralManager && self.peripheral) {
+        [self.centralManager cancelPeripheralConnection:self.peripheral];
+    }
 }
 
 @end
