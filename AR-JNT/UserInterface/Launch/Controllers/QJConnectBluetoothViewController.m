@@ -48,6 +48,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self startFlashSequenceAnimation];
+    [self configureVolume];
     self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
 
@@ -91,6 +92,19 @@
         }];
     }
     return _bluetoothView;
+}
+
+/**
+ *  配置系统音量
+ */
+- (void)configureVolume {
+    // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
+    NSError *setCategoryError = nil;
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryPlayback
+                    error: &setCategoryError];
+    
+    if (!success) { /* handle the error in setCategoryError */ }
 }
 
 #pragma mark - Flash Animation
