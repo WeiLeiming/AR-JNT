@@ -42,6 +42,7 @@
 
 - (void)dealloc {
     NSLog(@"dealloc: %@", self.class);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -49,6 +50,7 @@
     // Do any additional setup after loading the view.
     [self startFlashSequenceAnimation];
     [self configureVolume];
+    [self addNotification];
     self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
 
@@ -473,6 +475,21 @@
         default:
             break;
     }
+}
+
+#pragma mark - Notification
+
+- (void)addNotification {
+    // app退到后台
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
+}
+
+/**
+ *  应用退到后台
+ */
+- (void)appDidEnterBackground {
+    NSLog(@"应用退到后台");
+    [self.centralManager cancelPeripheralConnection:self.peripheral];
 }
 
 @end
