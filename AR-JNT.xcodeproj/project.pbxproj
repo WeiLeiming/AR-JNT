@@ -204,6 +204,7 @@
 		D57072FB1ED4167F00F0B064 /* QJBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E71ED4167F00F0B064 /* QJBaseView.m */; };
 		D57072FC1ED4167F00F0B064 /* QJBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D57072E91ED4167F00F0B064 /* QJBaseViewController.m */; };
 		D57072FF1ED417C400F0B064 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D57072FD1ED417C400F0B064 /* LaunchScreen.storyboard */; };
+		D5A1819D1F31798F00C2EE58 /* QJUUIDUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A1819C1F31798F00C2EE58 /* QJUUIDUtil.m */; };
 		D5A972361EE7AFB700B1E632 /* libiconv.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A972351EE7AFB700B1E632 /* libiconv.2.tbd */; };
 		D5A972381EE7AFC700B1E632 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A972371EE7AFC700B1E632 /* UIKit.framework */; };
 		D5A9723A1EE7AFD100B1E632 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5A972391EE7AFD100B1E632 /* SystemConfiguration.framework */; };
@@ -8553,6 +8554,8 @@
 		D57072EF1ED4167F00F0B064 /* QJNetWorkingMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJNetWorkingMacro.h; sourceTree = "<group>"; };
 		D57072FE1ED417C400F0B064 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D57073001ED4186600F0B064 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5A1819B1F31798F00C2EE58 /* QJUUIDUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QJUUIDUtil.h; path = UUID/QJUUIDUtil.h; sourceTree = "<group>"; };
+		D5A1819C1F31798F00C2EE58 /* QJUUIDUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QJUUIDUtil.m; path = UUID/QJUUIDUtil.m; sourceTree = "<group>"; };
 		D5A972351EE7AFB700B1E632 /* libiconv.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.tbd; path = usr/lib/libiconv.2.tbd; sourceTree = SDKROOT; };
 		D5A972371EE7AFC700B1E632 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5A972391EE7AFD100B1E632 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -17769,6 +17772,7 @@
 		D57072F01ED4167F00F0B064 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				D5A810CA1F30AF34009EB1BB /* UUID */,
 				D5F8C87B1F2B344F0019BF44 /* ConnectUnityToiOS */,
 				D50869321EF8CC7C00020827 /* Date */,
 				D5106A7C1EEE9558005635E2 /* Language */,
@@ -17816,6 +17820,15 @@
 			children = (
 			);
 			path = ThirdLibraries;
+			sourceTree = "<group>";
+		};
+		D5A810CA1F30AF34009EB1BB /* UUID */ = {
+			isa = PBXGroup;
+			children = (
+				D5A1819B1F31798F00C2EE58 /* QJUUIDUtil.h */,
+				D5A1819C1F31798F00C2EE58 /* QJUUIDUtil.m */,
+			);
+			name = UUID;
 			sourceTree = "<group>";
 		};
 		D5A959B11EE7AD1D00B1E632 /* Unity */ = {
@@ -18316,6 +18329,7 @@
 				D57072F81ED4167F00F0B064 /* QJBaseNavigationController.m in Sources */,
 				D509F2751F2C985400C5080E /* MetalHelper.mm in Sources */,
 				D509F1FE1F2C985100C5080E /* Bulk_Assembly-CSharp_0.cpp in Sources */,
+				D5A1819D1F31798F00C2EE58 /* QJUUIDUtil.m in Sources */,
 				D509F21D1F2C985200C5080E /* Bulk_System.Xml_2.cpp in Sources */,
 				D509F2841F2C985500C5080E /* CardboardAppController.mm in Sources */,
 				D509F2331F2C985200C5080E /* Il2CppCompilerCalculateTypeValues_14Table.cpp in Sources */,

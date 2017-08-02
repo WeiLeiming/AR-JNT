@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "QJCheckUpdateViewController.h"
+#import "QJUUIDUtil.h"
 
 @interface AppDelegate ()
 
@@ -30,6 +31,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // 保存UUID到钥匙串
+    [QJUUIDUtil saveUUIDToKeyChain];
     
     _unityController = [[UnityAppController alloc] init];
     [_unityController application:application didFinishLaunchingWithOptions:launchOptions];
