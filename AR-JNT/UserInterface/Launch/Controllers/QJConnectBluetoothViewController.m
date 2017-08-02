@@ -10,6 +10,7 @@
 #import "QJConnectBluetoothView.h"
 #import "QJNetworkingRequest.h"
 #import "QJAddressModel.h"
+#import "QJUUIDUtil.h"
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -152,6 +153,48 @@
     }];
 }
 
+- (void)uploadMacAddressWhenStart:(NSString *)address {
+    // http://ip:port/macup/count?mac=00:01:14:13:20:25&type=0&uuid=36EE6598-36EE-36EE
+    [SVProgressHUD show];
+    NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/count/"];
+    NSString *deviceUUID = [QJUUIDUtil readUUIDFromKeyChain];
+    NSDictionary *parameters = @{
+        @"mac": address,
+        @"type": @(QJBluetoothStatusStart),
+        @"uuid": deviceUUID
+    };
+    [QJNetworkingRequest GET:urlStr parameters:parameters needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@\nmsg: %@", responseObject, responseObject[@"msg"]);
+        [SVProgressHUD dismissWithCompletion:^{
+            // 确认进入U3D界面
+            self.enterGame = YES;
+            [kAppDelegate showUnityWindow];
+        }];
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+        [self.centralManager cancelPeripheralConnection:self.peripheral];
+        [self showAlertControllerWithTitle:@"提醒" message:@"发生错误，请重试" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+            [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+        }];
+    }];
+}
+
+- (void)uploadMacAddressWhenStop:(NSString *)address {
+    // http://ip:port/macup/count?mac=00:01:14:13:20:25&type=0&uuid=36EE6598-36EE-36EE
+    NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/count/"];
+    NSString *deviceUUID = [QJUUIDUtil readUUIDFromKeyChain];
+    NSDictionary *parameters = @{
+                                 @"mac": address,
+                                 @"type": @(QJBluetoothStatusStop),
+                                 @"uuid": deviceUUID
+                                 };
+    [QJNetworkingRequest GET:urlStr parameters:parameters needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@\nmsg: %@", responseObject, responseObject[@"msg"]);
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+    }];
+}
+
 #pragma mark - QJConnectBluetoothViewDelegate
 - (void)connectBluetoothView:(QJConnectBluetoothView *)view languageBtnClicked:(UIButton *)sender {
     NSLog(@"change language button click");
@@ -240,6 +283,7 @@
     if (self.isEnterGame) {
         self.enterGame = NO;
         [kAppDelegate hideUnityWindow];
+        [self uploadMacAddressWhenStop:self.macAddress];
         [self showAlertControllerWithTitle:@"提醒" message:@"蓝牙已断开，请重新连接" actionTitle:@"确定" handler:^(UIAlertAction *action) {
             [central scanForPeripheralsWithServices:nil options:nil];
         }];
@@ -362,18 +406,8 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
-        NSArray *addressArray = [QJAddressModel bg_findFormatSqlConditions:@"where %@=%@",bg_sqlKey(@"address"),bg_sqlValue(self.macAddress)];
-        NSLog(@"addressArray = %@", addressArray);
-        if (addressArray.count == 0) {
-            self.addressModel.address = self.macAddress;
-            [self uploadMacAddress:self.macAddress];
-        }
-
-        [peripheral readValueForCharacteristic:characteristic];
-        
-        // 配对成功，确认可以进入U3D界面
-        self.enterGame = YES;
-        [kAppDelegate showUnityWindow];
+        // 配对成功，上传数据
+        [self uploadMacAddressWhenStart:self.macAddress];
     }
 }
 

@@ -8,6 +8,11 @@
 
 #import "QJBaseViewController.h"
 
+typedef NS_ENUM(NSUInteger, QJBluetoothStatus) {
+    QJBluetoothStatusStop,
+    QJBluetoothStatusStart,
+};
+
 @interface QJConnectBluetoothViewController : QJBaseViewController
 
 @end
