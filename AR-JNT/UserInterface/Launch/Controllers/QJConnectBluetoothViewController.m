@@ -166,9 +166,16 @@
     [QJNetworkingRequest GET:urlStr parameters:parameters needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@\nmsg: %@", responseObject, responseObject[@"msg"]);
         [SVProgressHUD dismissWithCompletion:^{
-            // 确认进入U3D界面
-            self.enterGame = YES;
-            [kAppDelegate showUnityWindow];
+            if ([responseObject[@"success"] isEqual: @(1)]) {
+                // 确认进入U3D界面
+                self.enterGame = YES;
+                [kAppDelegate showUnityWindow];
+            } else if ([responseObject[@"success"] isEqual: @(0)]) {
+                [self.centralManager cancelPeripheralConnection:self.peripheral];
+                [self showAlertControllerWithTitle:@"提醒" message:@"您可能是盗版硬件的受害者！" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+                    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+                }];
+            }
         }];
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
