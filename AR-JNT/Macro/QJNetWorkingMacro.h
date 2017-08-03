@@ -16,6 +16,6 @@
 #endif
 
 //网络请求超时时间
-#define kNetworkTimeoutInterval              10
+#define kNetworkTimeoutInterval              5
 
 #endif /* QJNetWorkingMacro_h */
