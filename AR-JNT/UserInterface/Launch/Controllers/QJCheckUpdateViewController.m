@@ -33,7 +33,7 @@
 @implementation QJCheckUpdateViewController
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NetworkStatus" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"dealloc: %@", self.class);
 }
 
@@ -43,11 +43,7 @@
     [self initBackgroundUI];
     self.overdue = self.dateHelper.isOverdue;
     
-    if (self.isOverdue) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusNotifation:) name:@"NetworkStatus" object:nil];
-    } else {
-        [self startProgressSequenceAnimation];
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusNotifation:) name:@"NetworkStatus" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -140,17 +136,17 @@
 
 #pragma mark - Check network
 - (void)checkNetwork {
-    if (kAppDelegate.networkStatus == AFNetworkReachabilityStatusUnknown) {
-        
-    } else if (kAppDelegate.networkStatus == AFNetworkReachabilityStatusNotReachable) {
+    if (kAppDelegate.networkStatus == AFNetworkReachabilityStatusNotReachable || kAppDelegate.networkStatus == AFNetworkReachabilityStatusUnknown) {
         self.noNetworkView.delegate = self;
     } else {
         if (self.noNetworkView) {
             [self.noNetworkView removeFromSuperview];
             self.noNetworkView = nil;
         }
+        if (self.isOverdue) {
+            [self fetchSyetemStatus];
+        }
         [self startProgressSequenceAnimation];
-        [self fetchSyetemStatus];
     }
 }
 

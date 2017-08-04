@@ -10,6 +10,7 @@
 #import "QJConnectBluetoothView.h"
 #import "QJNetworkingRequest.h"
 #import "QJAddressModel.h"
+#import "QJUUIDUtil.h"
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -42,13 +43,31 @@
 
 - (void)dealloc {
     NSLog(@"dealloc: %@", self.class);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self startFlashSequenceAnimation];
-    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    [self configureVolume];
+    [self addNotification];
+    // 检查相机权限
+    [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
+        if (authorized) {
+            self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+        } else {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted) {
+                    self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+                } else {
+                    [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
+                        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+                    }];
+                }
+            }];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,7 +147,56 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@%@", mainPath, address];
     [QJNetworkingRequest GET:urlStr parameters:nil needCache:NO success:^(id operation, id responseObject) {
         NSLog(@"responseObject: %@", responseObject);
-        [self.addressModel saveOrUpdate];
+        [self.addressModel bg_saveOrUpdate];
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+    }];
+}
+
+- (void)uploadMacAddressWhenStart:(NSString *)address {
+    // http://ip:port/macup/count?mac=00:01:14:13:20:25&type=0&uuid=36EE6598-36EE-36EE
+    [SVProgressHUD show];
+    NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/count/"];
+    NSString *deviceUUID = [QJUUIDUtil readUUIDFromKeyChain];
+    NSDictionary *parameters = @{
+        @"mac": address,
+        @"type": @(QJBluetoothStatusStart),
+        @"uuid": deviceUUID
+    };
+    [QJNetworkingRequest GET:urlStr parameters:parameters needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@\nmsg: %@", responseObject, responseObject[@"msg"]);
+        [SVProgressHUD dismissWithCompletion:^{
+            if ([responseObject[@"success"] isEqual: @(1)]) {
+                // 确认进入U3D界面
+                self.enterGame = YES;
+                [kAppDelegate showUnityWindow];
+            } else if ([responseObject[@"success"] isEqual: @(0)]) {
+                [self.centralManager cancelPeripheralConnection:self.peripheral];
+                [self showAlertControllerWithTitle:@"提醒" message:@"您可能是盗版硬件的受害者！" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+                    [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+                }];
+            }
+        }];
+    } failure:^(id operation, NSError *error) {
+        NSLog(@"error: %@", error);
+        [self.centralManager cancelPeripheralConnection:self.peripheral];
+        [self showAlertControllerWithTitle:@"提醒" message:@"发生错误，请重试" actionTitle:@"确定" handler:^(UIAlertAction *action) {
+            [self.centralManager scanForPeripheralsWithServices:nil options:nil];
+        }];
+    }];
+}
+
+- (void)uploadMacAddressWhenStop:(NSString *)address {
+    // http://ip:port/macup/count?mac=00:01:14:13:20:25&type=0&uuid=36EE6598-36EE-36EE
+    NSString *urlStr = [kMainServerUrl stringByAppendingString:@"/macup/count/"];
+    NSString *deviceUUID = [QJUUIDUtil readUUIDFromKeyChain];
+    NSDictionary *parameters = @{
+                                 @"mac": address,
+                                 @"type": @(QJBluetoothStatusStop),
+                                 @"uuid": deviceUUID
+                                 };
+    [QJNetworkingRequest GET:urlStr parameters:parameters needCache:NO success:^(id operation, id responseObject) {
+        NSLog(@"responseObject: %@\nmsg: %@", responseObject, responseObject[@"msg"]);
     } failure:^(id operation, NSError *error) {
         NSLog(@"error: %@", error);
     }];
@@ -222,6 +290,7 @@
     if (self.isEnterGame) {
         self.enterGame = NO;
         [kAppDelegate hideUnityWindow];
+        [self uploadMacAddressWhenStop:self.macAddress];
         [self showAlertControllerWithTitle:@"提醒" message:@"蓝牙已断开，请重新连接" actionTitle:@"确定" handler:^(UIAlertAction *action) {
             [central scanForPeripheralsWithServices:nil options:nil];
         }];
@@ -344,34 +413,8 @@
         }
         [peripheral setNotifyValue:NO forCharacteristic:characteristic];
     } else if (characteristic.isNotifying && [characteristic.UUID isEqual:[CBUUID UUIDWithString:kDataCharacteristicUUID]]) {
-        NSArray *addressArray = [QJAddressModel findFormatSqlConditions:@"where %@=%@",sqlKey(@"address"),sqlValue(self.macAddress)];
-        NSLog(@"addressArray = %@", addressArray);
-        if (addressArray.count == 0) {
-            self.addressModel.address = self.macAddress;
-            [self uploadMacAddress:self.macAddress];
-        }
-
-        [peripheral readValueForCharacteristic:characteristic];
-        
-        // 配对成功，确认可以进入U3D界面
-        self.enterGame = YES;
-        
-        // 检查相机权限
-        [self checkCameraAuthorizationStatusCompletionHandler:^(BOOL authorized) {
-            if (authorized) {
-                [kAppDelegate showUnityWindow];
-            } else {
-                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-                    if (granted) {
-                        [kAppDelegate showUnityWindow];
-                    } else {
-                        [self showInfoWithStatus:QJLocalizedStringFromTable(@"相机未授权，部分功能无法使用，请前往设置开启", @"Localizable") dismissWithDelay:2.0 completion:^{
-                            [kAppDelegate showUnityWindow];
-                        }];
-                    }
-                }];
-            }
-        }];
+        // 配对成功，上传数据
+        [self uploadMacAddressWhenStart:self.macAddress];
     }
 }
 
@@ -458,6 +501,36 @@
             break;
         default:
             break;
+    }
+}
+
+/**
+ *  配置系统音量
+ */
+- (void)configureVolume {
+    // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
+    NSError *setCategoryError = nil;
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryPlayback
+                    error: &setCategoryError];
+    
+    if (!success) { /* handle the error in setCategoryError */ }
+}
+
+#pragma mark - Notification
+
+- (void)addNotification {
+    // app退到后台
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground) name:UIApplicationWillResignActiveNotification object:nil];
+}
+
+/**
+ *  应用退到后台
+ */
+- (void)appDidEnterBackground {
+    NSLog(@"应用退到后台");
+    if (self.centralManager && self.peripheral) {
+        [self.centralManager cancelPeripheralConnection:self.peripheral];
     }
 }
 

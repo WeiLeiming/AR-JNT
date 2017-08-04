@@ -51,6 +51,7 @@
         }];
         imageView;
     });
+    /*
     self.languageBtn = ({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         NSString *localizedString = QJLocalizedStringFromTable(@"LanguageBtn", @"Localizable");
@@ -65,6 +66,7 @@
         }];
         button;
     });
+     */
 }
 
 #pragma mark - Action

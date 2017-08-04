@@ -16,6 +16,7 @@ target 'AR-JNT' do
   pod 'JKCategories'
   
   pod 'BGFMDB'
+  pod 'UICKeyChainStore'
 
   target 'AR-JNTTests' do
     inherit! :search_paths

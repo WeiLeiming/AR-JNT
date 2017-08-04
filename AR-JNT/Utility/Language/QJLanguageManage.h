@@ -15,6 +15,8 @@
 
 + (instancetype)sharedManager;
 
++ (NSString *)getSystemCurrentLanguage;
+
 - (NSString *)getStringForKey:(NSString *)key withTable:(NSString *)table;
 
 - (void)changeNowLanguage;
