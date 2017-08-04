@@ -12,7 +12,7 @@
 #ifdef kTestServerOpen
     #define kMainServerUrl                   @"http://192.168.1.99:80"
 #else
-    #define kMainServerUrl                   @"http://120.24.69.30:7000"
+    #define kMainServerUrl                   @"http://macup.591vr.com"     // http://120.24.69.30:7000
 #endif
 
 //网络请求超时时间
