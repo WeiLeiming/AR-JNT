@@ -6,6 +6,10 @@
 
 AR-JNT手枪配套工程
 
+## App Store
+
+![AR-JNT](https://ws4.sinaimg.cn/large/006tNc79ly1fi7v2gy79hj307s07s0so.jpg)
+
 ## 预览
 
 ![IMG_0495](https://ws3.sinaimg.cn/large/006tKfTcly1fhzkrnegmej30m80ciabd.jpg)
@@ -22,5 +26,5 @@ AR-JNT手枪配套工程
 
 ## 注意
 
-- [git-lfs/git-lfs](git-lfs/git-lfs)不知为啥上传不上去。因此Unity工程因太大而被暂时忽略上传。
+- [git-lfs/git-lfs](git-lfs/git-lfs)不知为啥上传不上去。因此Unity工程被暂时忽略上传。
 
