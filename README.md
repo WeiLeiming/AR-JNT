@@ -4,6 +4,10 @@
 ![support](https://img.shields.io/badge/support-iOS%209%2B-blue.svg?style=flat)
 ![language](https://img.shields.io/badge/language-Objective--C-blue.svg?style=flat)
 
+[![GitHub release](https://img.shields.io/github/release/weileiming/ar-jnt.svg)](https://github.com/WeiLeiming/AR-JNT/releases)
+
+[![Itunes App Store](https://img.shields.io/itunes/v/1250779221.svg)](https://itunes.apple.com/us/app/ar-jnt-gun/id1250779221?l=zh&ls=1&mt=8)
+
 AR-JNT手枪配套工程
 
 ## App Store
